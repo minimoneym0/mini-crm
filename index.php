@@ -1,1 +1,1 @@
-<?="miniCRM"?>
+<? phpinfo();?>
