@@ -6,6 +6,6 @@ class UsersController{
         $userModel = new User(); // создаем экземпляр' класса User(находится в моделях)
         $users = $userModel->readAll(); // получаем пользователей из модели User
 
-        include 'app/views/users/index.php'; // подключаем файл, который будет html шаблоном
+        include 'app/views/users/index.php'; // подключаем файл, который будет html шаблоном для списка пользователей
     }
 }

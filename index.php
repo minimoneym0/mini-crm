@@ -8,7 +8,6 @@ require_once 'app/models/Database.php';
 require_once 'app/models/User.php';
 // подключаем контроллеры
 require_once 'app/controllers/users/UsersController.php';
-require_once 'app/controllers/users/AuthController.php';
 
 require_once 'app/router.php';
 

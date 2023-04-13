@@ -11,7 +11,7 @@ class Router{
                 $controller = new UsersController(); // созд экземпл класса
                 $controller -> index(); // вызываем метод со списком пользователей
                 break;
-            default: // по умолчанию, если страница не найдена выводим 404 и сообщение
+            default: // по умолчанию, если страница не найдена(нет нужного GET параметра) выводим 404 и сообщение
                 http_response_code(404);
                 echo "Page not found";
                 break;
