@@ -11,10 +11,9 @@ class User{
     public function readAll(){
        $result = $this->db->query("SELECT * FROM users"); // запрос к бд
 
-       $users = [];
        // преобразуем данные в массив построчно через fetch_assoc()
        while($row=$result->fetch_assoc()){
-            $users = $row;
+            $users[] = $row;
        }
 
        return $users;
