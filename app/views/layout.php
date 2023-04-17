@@ -17,7 +17,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="" class="nav-link" href="">Users</a>
+                        <a href="?page=users" class="nav-link" href="">Users</a>
                     </li>
                 </ul>
             </div>

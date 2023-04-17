@@ -4,7 +4,7 @@ $title = 'Users list';
 ob_start();?>
 
 <h1>Users list</h1>
-<a href="#" class="btn btn-success">Create User</a>
+<a href="?page=users&action=create" class="btn btn-success">Create User</a>
 <table class='table'>
     <thead>
         <tr>
