@@ -9,7 +9,19 @@ class Router{
         switch($page){
             case 'users':
                 $controller = new UsersController(); // созд экземпл класса
-                $controller -> index(); // вызываем метод со списком пользователей
+                // напишем проверку на действие(action)
+                if(isset($_GET['action'])){
+                    switch($_GET['action']){
+                        case 'create':
+                            $controller -> create(); 
+                            break;
+                        case 'store':
+                            $controller -> store(); // вызов метода для отработки action=store
+                            break;
+                    }
+                }else{
+                    $controller -> index(); // вызываем метод со списком пользователей
+                }
                 break;
             default: // по умолчанию, если страница не найдена(нет нужного GET параметра) выводим 404 и сообщение
                 http_response_code(404);
