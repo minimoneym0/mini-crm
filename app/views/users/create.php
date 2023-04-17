@@ -4,7 +4,7 @@ $title = 'Create User';
 ob_start();?>
 
 <h1>Create User</h1>
-<form method="post" action="">
+<form method="post" action="?page=users&action=store"> <!-- указываем action=store, ссылаясь на метод store в UserController -->
     <div class="form-group">
         <label for="login">Login</label>
         <input type="text" class="form-control" id="login" name="login" required>
@@ -19,14 +19,13 @@ ob_start();?>
     </div>
     <div class="form-group">
         <label for="admin">Admin</label>
-        <select name="admin" id="admin" class="form-control">
+        <select name="is_admin" id="admin" class="form-control">
             <option value="0">No</option>
             <option value="1">Yes</option>
         </select>
     </div>
     <button class="btn btn-primary" type="submit">Create</button>
 </form>
-
 
 <?php $content = ob_get_clean();
 
