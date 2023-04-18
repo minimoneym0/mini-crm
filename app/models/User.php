@@ -35,4 +35,15 @@ class User{
             return false;
         }
     }
+
+    public function delete($id){
+        $stmt = $this->db->prepare('DELETE FROM users WHERE id = ?'); // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
+        $stmt -> bind_param("i", $id); 
+
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
