@@ -23,8 +23,8 @@ ob_start();?>
                 <td><?= $user['is_admin'];?></td>
                 <td><?= $user['created_at'];?></td>
                 <td>
-                    <a href="index.php?page=users&action=edit&id=<?php echo $user['id']; ?>" class="btn btn-primary">Edit</a>
-                    <a href="index.php?page=users&action=delete&id=<?php echo $user['id']; ?>">Delete</a>
+                    <a href="?page=users&action=edit&id=<?php echo $user['id']; ?>" class="btn btn-primary">Edit</a>
+                    <a href="?page=users&action=delete&id=<?php echo $user['id']; ?>">Delete</a>
                 </td>
             </tr>
             <?php endforeach; ?>
