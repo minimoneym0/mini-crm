@@ -26,6 +26,12 @@ class Router{
                         case 'delete':
                             $controller -> delete(); // вызов метода для отработки action=delete
                         break;
+                        case 'edit':
+                            $controller -> edit(); // вызов метода для отработки action=delete
+                        break;
+                        case 'update':
+                            $controller -> update(); // вызов метода для отработки action=delete
+                        break;
                     }
                 }else{
                     $controller -> index(); // вызываем метод со списком пользователей
