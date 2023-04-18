@@ -7,6 +7,11 @@ class Router{
         $page = isset($_GET['page']) ? $_GET['page'] : 'home';
         // в зависимости от того, что пришло через get, вызываем нужный контроллер
         switch($page){
+            case '': // подкл контроллер с выводом главн стр если строка без GET
+            case 'home': 
+                $controller = new HomeController();
+                $controller -> index();
+            break;
             case 'users':
                 $controller = new UsersController(); // созд экземпл класса
                 // напишем проверку на действие(action)
