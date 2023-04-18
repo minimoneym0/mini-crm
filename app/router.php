@@ -23,6 +23,9 @@ class Router{
                         case 'store':
                             $controller -> store(); // вызов метода для отработки action=store
                             break;
+                        case 'delete':
+                            $controller -> delete(); // вызов метода для отработки action=delete
+                        break;
                     }
                 }else{
                     $controller -> index(); // вызываем метод со списком пользователей
