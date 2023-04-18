@@ -46,4 +46,31 @@ class User{
             return false;
         }
     }
+
+    public function read($id){
+        $stmt = $this->db->prepare('SELECT * FROM users WHERE id = ?');
+        $stmt->bind_param("s", $id);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result(); // забираем строку которая лежит в stmt
+        $user = $result->fetch_assoc(); // вытаскиваем пользователя
+        return $user;
+    }
+
+    public function update($id, $data){
+        // забираем данные из формы, передаем в подготовленный запрос 
+        $login = $data['login'];
+        $admin = ($data['is_admin']) ? 1 : 0;
+        // подготавливаем запрос
+        $stmt = $this->db->prepare("UPDATE users SET login = ?, is_admin = ? WHERE id = ?");
+        // передаем параметры в подготовленный запрос
+        $stmt->bind_param("ssi", $login, $admin, $id);
+        // если запрос проходит возвращаем true, иначе false
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
