@@ -36,4 +36,18 @@ class UsersController{
         header('Location: ?page=users'); // после удаления перенаправляем на страницу с пользователями
     }
 
+    public function edit(){
+        $userModel = new User();
+        $user = $userModel->read($_GET['id']); // получаем пользователя
+        
+        include 'app/views/users/edit.php';
+    }
+
+    public function update(){
+        $userModel = new User();
+        $userModel->update($_GET['id'], $_POST);
+
+        header('Location: ?page=users'); 
+    }
+
 }
