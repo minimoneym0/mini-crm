@@ -1,4 +1,8 @@
 <?php
+// редирект с index.php на /
+if($_SERVER['REQUEST_URI'] == '/minicrm/index.php'){
+    header('Location: /minicrm');
+}
 
 $title = 'Home page';
 ob_start();?>
