@@ -3,9 +3,32 @@
 class User{
     private $db;
     // конструктором подключаемся к БД, через созданные ранее ф-ии в классе Database
+    // затем смотрим, если таблица с пользователями уже есть, то ничего не делаем, если нет, то отправляем запрос на создание таблицы users
     public function __construct()
     {
         $this->db = Database::getInstance()->getConnection();
+        try{
+            $result = $this->db->query("SELECT 1 FROM `users` LIMIT 1");
+        }catch(PDOException $e){
+            $this->createDbTable();
+        }
+    }
+
+    public function createDbTable(){
+        $query = 'CREATE TABLE IF NOT EXISTS `users`(
+            `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `login` VARCHAR(255) NOT NULL,
+            `password` VARCHAR(255) NOT NULL,
+            `is_admin` TINYINT(1) NOT NULL DEFAULT 0,
+            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )';
+
+        try{
+            $this->db->exec($query);
+            return true;
+        }catch(PDOException $e){
+            return false;
+        }
     }
 
     public function readAll(){
