@@ -14,7 +14,7 @@ class UsersController{
     }
 
     public function store(){
-        if(isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirm_password']) && isset($_POST['is_admin'])){
+        if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])){
             $password = $_POST['password'];
             $confirm_password = $_POST['confirm_password'];
             // если пароли не сопадают
@@ -24,7 +24,13 @@ class UsersController{
             }
             // если ошибок нет, вызываем модель User
             $userModel = new User();
-            $userModel->create($_POST); // передаем в ф-ю глоб массив с данными из формы
+            $data = [
+                'username' => $_POST['username'],
+                'email' => $_POST['email'],
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'role' => 1, // роль по умолчанию
+            ];
+            $userModel->create($data); // передаем в ф-ю глоб массив с данными из формы
         }
         header("Location: ?page=users");
     }

@@ -6,18 +6,24 @@ ob_start();?>
 <h1>Edit User</h1>
 <form method="post" action="?page=users&action=update&id=<?=$user['id'] ?>"> <!-- указываем action=store, ссылаясь на метод store в UserController -->
     <div class="form-group">
-        <label for="login">Login</label>
-        <input type="text" class="form-control" id="login" name="login" value="<?=$user['login']?>" required>
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" value="<?=$user['username']?>" required>
     </div>
-
-    <div class="form-group">
-        <label for="admin">Admin</label>
-        <select name="is_admin" id="admin" class="form-control">
-            <option value="1" <?php if($user['is_admin']) echo "selected";?>>Yes</option>
-            <option value="0" <?php if(!$user['is_admin']) echo "selected";?>>No</option>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" value="<?=$user['email']?>" required>
+    </div>
+    <div class="mb-3">
+        <label for="role" class="form-label">Role</label>
+        <select name="role" id="role" class="form-control">
+            <option value="0" <?=$user['role'] == 0 ? 'selected' : '';?>>User</option>
+            <option value="1" <?=$user['role'] == 1 ? 'selected' : '';?>>Content Creator</option>
+            <option value="2" <?=$user['role'] == 2 ? 'selected' : '';?>>Editor</option>
+            <option value="3" <?=$user['role'] == 3 ? 'selected' : '';?>>Admin</option>
         </select>
     </div>
-    <button class="btn btn-primary" type="submit">Edit</button>
+    
+    <button class="btn btn-primary" type="submit">Save Changes</button>
 </form>
 
 <?php $content = ob_get_clean();
