@@ -28,37 +28,38 @@ class User{
         $admin = ($data['is_admin']) ? 1 : 0;
         $created_at = date('Y-m-d H:i:s');
         // подготавливаем запрос
-        $stmt = $this->db->prepare("INSERT INTO users (login, password, is_admin, created_at) VALUE (?,?,?,?)");
-        // передаем параметры в подготовленный запрос
-        $stmt->bind_param("ssis", $login, $password, $admin, $created_at);
-        // если запрос проходит возвращаем true, иначе false
-        if($stmt->execute()){
+        $query = "INSERT INTO users (login, password, is_admin, created_at) VALUE (?,?,?,?)";
+
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$login, $password, $admin, $created_at]);
             return true;
-        }else{
+        }catch(PDOException $e){
             return false;
         }
     }
 
     public function delete($id){
-        $stmt = $this->db->prepare('DELETE FROM users WHERE id = ?'); // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
-        $stmt -> bind_param("i", $id); 
+        $query = 'DELETE FROM users WHERE id = ?'; // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
 
-        if($stmt->execute()){
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$id]); 
             return true;
-        }else{
+        }catch(PDOException $e){
             return false;
         }
     }
 
     public function read($id){
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE id = ?');
-        $stmt->bind_param("s", $id);
-
-        $stmt->execute();
-
-        $result = $stmt->get_result(); // забираем строку которая лежит в stmt
-        $user = $result->fetch_assoc(); // вытаскиваем пользователя
-        return $user;
+        $query = 'SELECT * FROM users WHERE id = ?';
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }catch(PDOException $e){
+            return false;
+        }
     }
 
     public function update($id, $data){
@@ -66,14 +67,14 @@ class User{
         $login = $data['login'];
         $admin = ($data['is_admin']) ? 1 : 0;
         // подготавливаем запрос
-        $stmt = $this->db->prepare("UPDATE users SET login = ?, is_admin = ? WHERE id = ?");
-        // передаем параметры в подготовленный запрос
-        $stmt->bind_param("ssi", $login, $admin, $id);
-        // если запрос проходит возвращаем true, иначе false
-        if($stmt->execute()){
-            return true;
-        }else{
+        $query = "UPDATE users SET login = ?, is_admin = ? WHERE id = ?";
+        
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$login,$admin,$id]);
+        }catch(PDOException $e){
             return false;
         }
+       
     }
 }
