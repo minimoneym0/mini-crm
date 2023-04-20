@@ -7,16 +7,19 @@ class User{
     {
         $this->db = Database::getInstance()->getConnection();
     }
-    // метод, который забирает из БД пользователей и запаковыает их в массив
-    public function readAll(){
-       $result = $this->db->query("SELECT * FROM users"); // запрос к бд
 
-       // преобразуем данные в массив построчно через fetch_assoc()
-       while($row=$result->fetch_assoc()){
-            $users[] = $row;
-       }
-       return $users;
-    }
+    public function readAll(){
+        try{
+            $stmt = $this->db->query("SELECT * FROM `users`");
+
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
+                $users[] = $row;
+            }
+            return $users;
+        }catch(PDOException $e){
+                return false;
+        }
+    } 
 
     public function create($data){
         // забираем данные из формы, передаем в подготовленный запрос 
