@@ -38,11 +38,8 @@ class AuthController{
         header('Location: ?page=users'); // после удаления перенаправляем на страницу с пользователями
     }
 
-    public function edit(){
-        $userModel = new User();
-        $user = $userModel->read($_GET['id']); // получаем пользователя
-        
-        include 'app/views/users/edit.php';
+    public function login(){     
+        include 'app/views/users/login.php';
     }
 
     public function update(){
