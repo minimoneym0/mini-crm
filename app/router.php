@@ -37,6 +37,22 @@ class Router{
                     $controller -> index(); // вызываем метод со списком пользователей
                 }
                 break;
+            case 'register':
+                $controller = new AuthController();
+                $controller->register();
+                break;
+            case 'login':
+                $controller = new AuthController();
+                $controller->login();
+                break;
+            case 'authenticate':
+                $controller = new AuthController();
+                $controller->authenticate();
+                break;
+            case 'logout':
+                $controller = new AuthController();
+                $controller->logout();
+                break;
             default: // по умолчанию, если страница не найдена(нет нужного GET параметра) выводим 404 и сообщение
                 http_response_code(404);
                 echo "Page not found";
