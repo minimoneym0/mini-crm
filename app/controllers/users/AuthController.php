@@ -28,7 +28,7 @@ class AuthController{
             ];
             $userModel->create($data); // передаем в ф-ю глоб массив с данными из формы
         }
-        header("Location: ?page=users");
+        header("Location: ?page=login"); // после регистрации, пользователя перенаправляется на страницу авторизации
     }
 // создадим метод для удаления пользователей
     public function delete(){
