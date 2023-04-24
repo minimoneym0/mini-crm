@@ -30,23 +30,39 @@ class AuthController{
         }
         header("Location: ?page=login"); // после регистрации, пользователя перенаправляется на страницу авторизации
     }
-// создадим метод для удаления пользователей
-    public function delete(){
-        $userModel = new User();
-        $userModel->delete($_GET['id']); // вызываем метод для удаления по id
-
-        header('Location: ?page=users'); // после удаления перенаправляем на страницу с пользователями
-    }
 
     public function login(){     
         include 'app/views/users/login.php';
     }
 
-    public function update(){
-        $userModel = new User();
-        $userModel->update($_GET['id'], $_POST);
+    // метод для аутентификации пользователя
+    public function authenticate(){
+      $authModel = new AuthUser();
 
-        header('Location: ?page=users'); 
+      if(isset($_POST['email']) && isset($_POST['password'])){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+// проверяем есть ли email и пароль, записываем их в переменные и через метод поиска email сравниваем есть ли такой в системе
+        $user = $authModel->findByEmail($email);
+// если пользователь найден и проверен(успешная авторизация), стартуем сессию и пишем в нее id и роль пользователя
+        if($user && password_verify($password, $user['password'])){
+            session_start();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_role'] = $user['role'];
+
+            header('Location: index.php');
+        }else{
+            echo "sory, bad data, try again";
+        }
+      }
+    }
+
+    // создадим метод для выхода пользователя из системы
+    public function logout(){
+        session_start();
+        session_unset(); // удаляем все зарегестрированные переменные текущей сессии
+        session_destroy(); // уничтожает все данные связанные с текущей сессией
+        header('Location: index.php'); // после удаления перенаправляем на главную
     }
 
 }
