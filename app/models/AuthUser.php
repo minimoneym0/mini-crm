@@ -76,44 +76,17 @@ class AuthUser{
         }
     }
 
-    public function delete($id){
-        $query = 'DELETE FROM users WHERE id = ?'; // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
-
+    public function findByEmail($email){
         try{
+            $query = "SELECT * FROM users WHERE email = ? LIMIT 1";
+
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$id]); 
-            return true;
+            $stmt->execute([$email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $user ? $user : false;
         }catch(PDOException $e){
             return false;
         }
-    }
-
-    public function read($id){
-        $query = 'SELECT * FROM users WHERE id = ?';
-        try{
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([$id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        }catch(PDOException $e){
-            return false;
-        }
-    }
-
-    public function update($id, $data){
-        // забираем данные из формы, передаем в подготовленный запрос 
-        $username = $data['username'];
-        $admin = !empty($data['admin']) && $data['admin'] !== 0 ? 1 : 0;
-        $email = $data['email'];
-        $role = $data['role'];
-        // подготавливаем запрос
-        $query = "UPDATE users SET username = ?, is_admin = ?, email = ?, role = ? WHERE id = ?";
-        
-        try{
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([$username, $admin, $email, $role, $id]);
-        }catch(PDOException $e){
-            return false;
-        }
-       
     }
 }
