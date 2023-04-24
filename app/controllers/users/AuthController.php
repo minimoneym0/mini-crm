@@ -42,6 +42,8 @@ class AuthController{
       if(isset($_POST['email']) && isset($_POST['password'])){
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $remember = isset($_POST['remember']) ? $_POST['remember'] : '';
+
 // проверяем есть ли email и пароль, записываем их в переменные и через метод поиска email сравниваем есть ли такой в системе
         $user = $authModel->findByEmail($email);
 // если пользователь найден и проверен(успешная авторизация), стартуем сессию и пишем в нее id и роль пользователя
@@ -49,6 +51,11 @@ class AuthController{
             session_start();
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_role'] = $user['role'];
+// если чекбокс отмечен записываем куки пользователя
+            if($remember == 'on'){
+                setcookie('user_email', $email, time() + (7 * 24 * 60 * 60), '/');
+                setcookie('user_password', $password, time() + (7 * 24 * 60 * 60), '/');
+            }
 
             header('Location: index.php');
         }else{

@@ -53,6 +53,22 @@ class Router{
                 $controller = new AuthController();
                 $controller->logout();
                 break;
+            case 'auth':
+                $controller = new AuthController(); // созд экземпл класса
+                // напишем проверку на действие(action)
+                if(isset($_GET['action'])){
+                    switch($_GET['action']){
+                        case 'store':
+                            $controller -> store(); // вызов метода для отработки action=store
+                            break;
+                        case 'authenticate':
+                            $controller -> authenticate(); // вызов метода для отработки action=store
+                            break;
+                    }
+                }else{
+                    $controller -> login();
+                }
+                break;
             default: // по умолчанию, если страница не найдена(нет нужного GET параметра) выводим 404 и сообщение
                 http_response_code(404);
                 echo "Page not found";
