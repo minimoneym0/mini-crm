@@ -19,14 +19,13 @@ class AuthController{
                 return;
             }
             // если ошибок нет, вызываем модель User
-            $userModel = new User();
+            $userModel = new AuthUser();
             $data = [
                 'username' => $_POST['username'],
                 'email' => $_POST['email'],
                 'password' => password_hash($password, PASSWORD_DEFAULT),
-                'role' => 1, // роль по умолчанию
             ];
-            $userModel->create($data); // передаем в ф-ю глоб массив с данными из формы
+            $userModel->register($data['username'], $data['email'], $data['password']); // передаем в ф-ю глоб массив с данными из формы
         }
         header("Location: ?page=login"); // после регистрации, пользователя перенаправляется на страницу авторизации
     }
