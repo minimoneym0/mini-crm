@@ -76,4 +76,16 @@ class Role{
             return false;
         }
     }
+
+    public function deleteRole($id){
+        $query = 'DELETE FROM roles WHERE id = ?'; // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
+
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$id]); 
+            return true;
+        }catch(PDOException $e){
+            return false;
+        }
+    }
 }

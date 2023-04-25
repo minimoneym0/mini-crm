@@ -30,26 +30,42 @@ class RoleController{
         }
         header("Location: index.php?page=roles");
     }
-// создадим метод для удаления пользователей
-    public function delete(){
-        $userModel = new User();
-        $userModel->delete($_GET['id']); // вызываем метод для удаления по id
 
-        header('Location: ?page=users'); // после удаления перенаправляем на страницу с пользователями
-    }
+    public function edit($id){
+        $roleModel = new Role();
+        $role = $roleModel->getRoleById($id); // получаем роль
 
-    public function edit(){
-        $userModel = new User();
-        $user = $userModel->read($_GET['id']); // получаем пользователя
+        if(!$role){
+            echo "Role not found";
+            return;
+        }
         
-        include 'app/views/users/edit.php';
+        include 'app/views/roles/edit.php';
     }
 
     public function update(){
-        $userModel = new User();
-        $userModel->update($_GET['id'], $_POST);
+        if(isset($_POST['id']) && isset($_POST['role_name']) && isset($_POST['role_description'])){
+            $id = trim($_POST['id']);
+            $role_name = trim($_POST['role_name']);
+            $role_description = trim($_POST['role_description']);
 
-        header('Location: ?page=users'); 
+            if(empty($role_name)){
+                echo "Role name is required";
+                return;
+            }
+
+            $roleModel = new Role();
+            $roleModel->updateRole($id, $role_name, $role_description);
+        }
+        header("Location: index.php?page=roles");
+    }
+
+    // создадим метод для удаления пользователей
+    public function delete(){
+        $roleModel = new Role();
+        $roleModel->deleteRole($_GET['id']); // вызываем метод для удаления по id
+
+        header('Location: index.php?page=roles'); // после удаления перенаправляем на страницу с пользователями
     }
 
 }
