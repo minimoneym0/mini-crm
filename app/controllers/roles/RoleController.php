@@ -1,4 +1,6 @@
 <?php
+require_once 'app/models/roles/Role.php'
+
 // контроллеры обрабатывают данные и передают в модель
 class RoleController{
     // метод отображающий всех пользователей
