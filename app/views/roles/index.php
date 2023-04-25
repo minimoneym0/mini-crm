@@ -4,34 +4,26 @@ $title = 'Roles list';
 ob_start();?>
 
 <h1>Roles list</h1>
-<a href="?page=users&action=create" class="btn btn-success">Create User</a>
 <table class='table'>
     <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Email verification</th>
-            <th scope="col">Is admin</th>
-            <th scope="col">Role</th>
-            <th scope="col">Is active</th>
-            <th scope="col">Last login</th>
+            <th scope="col">ID</th>
+            <th scope="col">Role name</th>
+            <th scope="col">Role description</th>
+            <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach($users as $user):?>
+        <?php foreach($roles as $role):?>
             <tr>
-                <th scope="row"><?= $user['id'];?></th>
-                <td><?= $user['username'];?></td>
-                <td><?= $user['email'];?></td>
-                <td><?= $user['email_verification'] ? 'Yes' : 'No';?></td>
-                <td><?= $user['is_admin'] ? 'Yes' : 'No';?></td>
-                <td><?= $user['role'];?></td>
-                <td><?= $user['is_active'] ? 'Yes' : 'No';?></td>
-                <td><?= $user['last_login'];?></td>
+                <td><?= $role['id'];?></td>
+                <td><?= $role['role_name'];?></td>
+                <td><?= $role['role_description'];?></td>
                 <td>
-                    <a href="?page=users&action=edit&id=<?php echo $user['id']; ?>" class="btn btn-primary">Edit</a>
-                    <a href="?page=users&action=delete&id=<?php echo $user['id']; ?>">Delete</a>
+                    <a href="?page=roles&action=edit&id=<?php echo $role['id']; ?>" class="btn btn-primary">Edit</a>
+                    <form method="POST" action="index.php?page=roles&action=delete&id=<?= $role['id'] ?>" class="d-inline-block">
+                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
                 </td>
             </tr>
             <?php endforeach; ?>
