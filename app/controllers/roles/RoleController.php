@@ -1,14 +1,14 @@
 <?php
-require_once 'app/models/roles/Role.php'
+require_once 'app/models/roles/Role.php';
 
 // контроллеры обрабатывают данные и передают в модель
 class RoleController{
     // метод отображающий всех пользователей
     public function index(){
-        $userModel = new User(); // создаем экземпляр' класса User(находится в моделях)
-        $users = $userModel->readAll(); // получаем пользователей из модели User
+        $roleModel = new Role(); // создаем экземпляр класса Role(находится в моделях)
+        $roles = $roleModel->getAllRoles(); // получаем роли из модели
 
-        include 'app/views/users/index.php'; // подключаем файл, который будет html шаблоном для списка пользователей
+        include 'app/views/roles/index.php'; // подключаем файл, который будет html шаблоном для списка пользователей
     }
     // пишем метод, который вызывает шаблон страницы
     public function create(){
@@ -16,25 +16,19 @@ class RoleController{
     }
 
     public function store(){
-        if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])){
-            $password = $_POST['password'];
-            $confirm_password = $_POST['confirm_password'];
-            // если пароли не сопадают
-            if($password !== $confirm_password){
-                echo "Password does not match";
+        if(isset($_POST['role_name']) && isset($_POST['role_description'])){
+            $role_name = trim($_POST['role_name']);
+            $role_description = trim($_POST['role_description']);
+
+            if(empty($role_name)){
+                echo "Role name is required!";
                 return;
             }
-            // если ошибок нет, вызываем модель User
-            $userModel = new User();
-            $data = [
-                'username' => $_POST['username'],
-                'email' => $_POST['email'],
-                'password' => password_hash($password, PASSWORD_DEFAULT),
-                'role' => 1, // роль по умолчанию
-            ];
-            $userModel->create($data); // передаем в ф-ю глоб массив с данными из формы
+
+            $roleModel = new Role();
+            $roleModel->createRole($role_name, $role_description);
         }
-        header("Location: ?page=users");
+        header("Location: index.php?page=roles");
     }
 // создадим метод для удаления пользователей
     public function delete(){
