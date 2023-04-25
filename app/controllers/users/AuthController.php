@@ -11,8 +11,15 @@ class AuthController{
 
     public function store(){
         if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])){
-            $password = $_POST['password'];
-            $confirm_password = $_POST['confirm_password'];
+            $username = trim($_POST['username']);
+            $email = trim($_POST['email']);
+            $password = trim($_POST['password']);
+            $confirm_password = trim($_POST['confirm_password']);
+
+            if(empty($username) || empty($email) || empty($password) || empty($confirm_password)){
+                echo "All fields are required";
+                return;
+            }
             // если пароли не сопадают
             if($password !== $confirm_password){
                 echo "Password does not match";
@@ -20,12 +27,7 @@ class AuthController{
             }
             // если ошибок нет, вызываем модель User
             $userModel = new AuthUser();
-            $data = [
-                'username' => $_POST['username'],
-                'email' => $_POST['email'],
-                'password' => password_hash($password, PASSWORD_DEFAULT),
-            ];
-            $userModel->register($data['username'], $data['email'], $data['password']); // передаем в ф-ю глоб массив с данными из формы
+            $userModel->register($username, $email, $password);
         }
         header("Location: ?page=login"); // после регистрации, пользователя перенаправляется на страницу авторизации
     }
