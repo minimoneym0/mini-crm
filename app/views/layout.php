@@ -23,6 +23,9 @@
                         <a href="?page=roles" class="nav-link">Roles</a>
                     </li>
                     <li class="nav-item">
+                        <a href="?page=pages" class="nav-link">Pages</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="?page=register" class="nav-link">Register</a>
                     </li>
                     <li class="nav-item">

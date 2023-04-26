@@ -12,7 +12,7 @@ ob_start();?>
     </div>
     <div class="mb-3">
         <label for="slug" class="form-label">Page slug</label>
-        <textarea class="form-control" id="slug" name="slug" required><?=$page['slug']?></textarea>
+        <input type="text" class="form-control" id="slug" name="slug" value="<?=$page['slug']?>" required>
     </div>
     
     <button class="btn btn-primary" type="submit">Update Page</button>
