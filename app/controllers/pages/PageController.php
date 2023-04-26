@@ -6,41 +6,41 @@ class PageController{
     // метод отображающий всех пользователей
     public function index(){
         $pageModel = new PageModel(); // создаем экземпляр класса Role(находится в моделях)
-        $pages = $pageModel->getAllRoles(); // получаем роли из модели
+        $pages = $pageModel->getAllPages(); // получаем роли из модели
 
-        include 'app/views/roles/index.php'; // подключаем файл, который будет html шаблоном для списка пользователей
+        include 'app/views/pages/index.php'; // подключаем файл, который будет html шаблоном для списка пользователей
     }
     // пишем метод, который вызывает шаблон страницы
     public function create(){
-        include 'app/views/roles/create.php';
+        include 'app/views/pages/create.php';
     }
 
     public function store(){
-        if(isset($_POST['role_name']) && isset($_POST['role_description'])){
-            $role_name = trim($_POST['role_name']);
-            $role_description = trim($_POST['role_description']);
+        if(isset($_POST['title']) && isset($_POST['slug'])){
+            $title = trim($_POST['title']);
+            $slug = trim($_POST['slug']);
 
-            if(empty($role_name)){
-                echo "Role name is required!";
+            if(empty($title) || empty($slug)){
+                echo "Title or slug fields are required!";
                 return;
             }
 
-            $roleModel = new Role();
-            $roleModel->createRole($role_name, $role_description);
+            $pageModel = new PageModel();
+            $pageModel->createPage($title, $slug);
         }
-        header("Location: index.php?page=roles");
+        header("Location: index.php?page=pages");
     }
 
     public function edit($id){
-        $roleModel = new Role();
-        $role = $roleModel->getRoleById($id); // получаем роль
+        $pageModel = new PageModel();
+        $page = $pageModel->getPageById($id); // получаем страницу
 
-        if(!$role){
+        if(!$page){
             echo "Role not found";
             return;
         }
         
-        include 'app/views/roles/edit.php';
+        include 'app/views/pages/edit.php';
     }
 
     public function update(){

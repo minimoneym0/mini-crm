@@ -3,7 +3,7 @@
 class PageModel{
     private $db;
     // конструктором подключаемся к БД, через созданные ранее ф-ии в классе Database
-    // затем смотрим, если таблица с пользователями уже есть, то ничего не делаем, если нет, то отправляем запрос на создание таблицы users
+    // затем смотрим, если таблица с пользователями уже есть, то ничего не делаем, если нет, то отправляем запрос на создание таблицы 
     public function __construct()
     {
         $this->db = Database::getInstance()->getConnection();
@@ -21,7 +21,7 @@ class PageModel{
             `slug` VARCHAR(255) NOT NULL,
             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             `update_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        )";
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
             try{
                 $this->db->exec($pageTableQuery);
@@ -30,7 +30,7 @@ class PageModel{
                 return false;
             }
     }
-// пишем метод для получения всех ролей
+// пишем метод для получения всех страниц
     public function getAllPages(){
         $query = "SELECT * FROM `pages`";
         try{
@@ -42,27 +42,27 @@ class PageModel{
             return false;
         }
     }
-// метод в котором создаем роль
-    public function createRole($role_name, $role_description){
+// метод в котором создаем страницу
+    public function createPage($title, $slug){
 
-        $query = "INSERT INTO roles (role_name, role_description) VALUES (?,?)";
+        $query = "INSERT INTO pages (title, slug) VALUES (?,?)";
 
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$role_name, $role_description]);
+            $stmt->execute([$title, $slug]);
             return true;
         }catch(PDOException $e){
             return false;
         }
     }
 // метод для получения конкретной роли по id
-    public function getRoleById($id){
-        $query = 'SELECT * FROM roles WHERE id = ?';
+    public function getPageById($id){
+        $query = 'SELECT * FROM pages WHERE id = ?';
         try{
             $stmt = $this->db->prepare($query);
             $stmt->execute([$id]);
-            $role = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $role ? $role : false;
+            $page = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $page ? $page : false;
         }catch(PDOException $e){
             return false;
         }
