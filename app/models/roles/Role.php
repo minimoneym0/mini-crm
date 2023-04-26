@@ -30,10 +30,11 @@ class Role{
     }
 // пишем метод для получения всех ролей
     public function getAllRoles(){
-        $query = "SELECT * FROM roles";
+        $query = "SELECT * FROM `roles`";
         try{
-            $stmt = $this->db->prepare($query); // подготовл запрос
-            $roles = $stmt->fetchAll(PDO::FETCH_ASSOC); // вывод в переменную 
+            $stmt = $this->db->prepare($query); // подготавливаем запрос
+            $stmt->execute(); // запускаем подготовленный запрос на выполнение
+            $roles = $stmt->fetchAll(); // получаем массив содержащий все извлеченные строки
             return $roles;
         }catch(PDOException $e){
             return false;
