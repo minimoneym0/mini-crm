@@ -12,7 +12,7 @@ class RoleController{
     }
     // пишем метод, который вызывает шаблон страницы
     public function create(){
-        include 'app/views/users/create.php';
+        include 'app/views/roles/create.php';
     }
 
     public function store(){

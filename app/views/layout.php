@@ -20,6 +20,12 @@
                         <a href="?page=users" class="nav-link">Users</a>
                     </li>
                     <li class="nav-item">
+                        <a href="?page=roles" class="nav-link">All Roles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="?page=roles&action=create" class="nav-link">Create Role</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="?page=register" class="nav-link">Register</a>
                     </li>
                     <li class="nav-item">
