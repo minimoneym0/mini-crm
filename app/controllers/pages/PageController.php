@@ -44,28 +44,28 @@ class PageController{
     }
 
     public function update(){
-        if(isset($_POST['id']) && isset($_POST['role_name']) && isset($_POST['role_description'])){
-            $id = trim($_POST['id']);
-            $role_name = trim($_POST['role_name']);
-            $role_description = trim($_POST['role_description']);
+        if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['slug'])){
+            $id = $_POST['id'];
+            $title = trim($_POST['title']);
+            $slug = trim($_POST['slug']);
 
-            if(empty($role_name)){
-                echo "Role name is required";
+            if(empty($title) || empty($slug)){
+                echo "Title or slug is required";
                 return;
             }
 
-            $roleModel = new Role();
-            $roleModel->updateRole($id, $role_name, $role_description);
+            $pageModel = new PageModel();
+            $pageModel->updatePage($id, $title, $slug);
         }
-        header("Location: index.php?page=roles");
+        header("Location: index.php?page=pages");
     }
 
     // создадим метод для удаления пользователей
     public function delete(){
-        $roleModel = new Role();
-        $roleModel->deleteRole($_GET['id']); // вызываем метод для удаления по id
+        $pageModel = new PageModel();
+        $pageModel->deletePage($_GET['id']); // вызываем метод для удаления по id
 
-        header('Location: index.php?page=roles'); // после удаления перенаправляем на страницу с пользователями
+        header('Location: index.php?page=pages'); // после удаления перенаправляем на страницу с пользователями
     }
 
 }

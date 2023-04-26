@@ -68,11 +68,11 @@ class PageModel{
         }
     }
 
-    public function updateRole($id, $role_name, $role_description){
-        $query = "UPDATE roles SET role_name = ?, role_description = ? WHERE id = ?";
+    public function updatePage($id, $title, $slug){
+        $query = "UPDATE pages SET title = ?, slug = ? WHERE id = ?";
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$role_name, $role_description, $id]);
+            $stmt->execute([$title, $slug, $id]);
 
             return true;
         }catch(PDOException $e){
@@ -80,8 +80,8 @@ class PageModel{
         }
     }
 
-    public function deleteRole($id){
-        $query = 'DELETE FROM roles WHERE id = ?'; // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
+    public function deletePage($id){
+        $query = 'DELETE FROM pages WHERE id = ?'; // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
 
         try{
             $stmt = $this->db->prepare($query);
