@@ -1,4 +1,6 @@
 <?php
+
+require_once 'app/models/roles/Role.php';
 // контроллеры обрабатывают данные и передают в модель
 class UsersController{
     // метод отображающий всех пользователей
@@ -45,6 +47,9 @@ class UsersController{
     public function edit(){
         $userModel = new User();
         $user = $userModel->read($_GET['id']); // получаем пользователя
+// для получения ролей пользователя допишем
+        $roleModel = new Role();
+        $roles = $roleModel->getAllRoles();
         
         include 'app/views/users/edit.php';
     }

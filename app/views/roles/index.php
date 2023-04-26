@@ -22,7 +22,7 @@ ob_start();?>
                 <td>
                     <a href="?page=roles&action=edit&id=<?php echo $role['id']; ?>" class="btn btn-primary">Edit</a>
                     <form method="POST" action="index.php?page=roles&action=delete&id=<?= $role['id'] ?>" class="d-inline-block">
-                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    <!-- <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button> -->
                     </form>
                 </td>
             </tr>

@@ -11,7 +11,7 @@ ob_start();?>
     </div>
     <div class="form-group">
         <label for="role_descripton">Role description</label>
-        <input type="text" class="form-control" id="role_descripton" name="role_descripton" required>
+        <textarea class="form-control" id="role_description" name="role_description" required></textarea>
     </div>
     <button class="btn btn-primary" type="submit">Create Role</button>
 </form>
