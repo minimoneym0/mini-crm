@@ -13,17 +13,14 @@
   <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="index.php">Crm_for_telegram</a>
+            <a class="navbar-brand" href="index.php">Home</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a href="?page=users" class="nav-link">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a href="?page=roles" class="nav-link">All Roles</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="?page=roles&action=create" class="nav-link">Create Role</a>
+                        <a href="?page=roles" class="nav-link">Roles</a>
                     </li>
                     <li class="nav-item">
                         <a href="?page=register" class="nav-link">Register</a>
