@@ -1,8 +1,8 @@
 <?php
-return [
-     'db_host' => 'localhost',
-     'db_user' => 'root',
-     'db_pass' => 'root',
-     'db_name_db' => 'minicrm',
 
-];
+define('APP_BASE_PATH', 'minicrm'); // указываем корневую папку сайта
+
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('PASS', 'root');
+define('DB_NAME', 'minicrm');
