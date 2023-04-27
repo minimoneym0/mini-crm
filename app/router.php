@@ -1,128 +1,36 @@
 <?php
 
+namespace app;
+use controllers\auth\AuthContoller;
+use controllers\pages\PageController;
+use controllers\roles\RoleController;
+use controllers\users\UserController;
+use controllers\HomeCintroller;
+
 class Router{
-    // пишем метод, запускающий сам роутер, инициализируется в корневом index.php
+    // определяем маршруты через регулярки
+    private $routes = [
+        '/^\/'.APP_BASE_PATH.'\/?$/' => ['controller'=>'\\HomeController', 'action'=>'index'],
+    ];
+
+
+    // пишем метод, запускающий сам роутер
     public function run(){
-        // если есть get параметр page, то мы его забираем, иначе считаем что у нас home в $page
-        $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-        // в зависимости от того, что пришло через get, вызываем нужный контроллер
-        switch($page){
-            case '': // подкл контроллер с выводом главн стр если строка без GET
-            case 'home': 
-                $controller = new HomeController();
-                $controller -> index();
-            break;
-            case 'users':
-                $controller = new UsersController(); // созд экземпл класса
-                // напишем проверку на действие(action)
-                if(isset($_GET['action'])){
-                    switch($_GET['action']){
-                        case 'create':
-                            $controller -> create(); 
-                            break;
-                        case 'store':
-                            $controller -> store(); // вызов метода для отработки action=store
-                            break;
-                        case 'delete':
-                            $controller -> delete(); // вызов метода для отработки action=delete
-                        break;
-                        case 'edit':
-                            $controller -> edit(); // вызов метода для отработки action=delete
-                        break;
-                        case 'update':
-                            $controller -> update(); // вызов метода для отработки action=delete
-                        break;
-                    }
-                }else{
-                    $controller -> index(); // вызываем метод со списком пользователей
-                }
-                break;
-            case 'roles':
-                $controller = new RoleController();
-                if(isset($_GET['action'])){
-                    switch($_GET['action']){
-                        case 'create':
-                            $controller->create();
-                            break;
-                        case 'store':
-                            $controller->store();
-                            break;
-                        case 'delete':
-                            $controller->delete();
-                            break;
-                        case 'edit':
-                            $controller->edit($_GET['id']);
-                            break;
-                        case 'update':
-                            $controller->update();
-                            break;
-                    }
-                }else{
-                    $controller->index();
-                }
-                break;
-
-            case 'pages':
-                $controller = new PageController();
-                if(isset($_GET['action'])){
-                    switch($_GET['action']){
-                        case 'create':
-                            $controller->create();
-                            break;
-                        case 'store':
-                             $controller->store();
-                            break;
-                        case 'delete':
-                            $controller->delete();
-                            break;
-                        case 'edit':
-                            $controller->edit($_GET['id']);
-                            break;
-                        case 'update':
-                            $controller->update();
-                            break;
-                    }
-                }else{
-                    $controller->index();
-                }
-                break;
-
-            case 'register':
-                $controller = new AuthController();
-                $controller->register();
-                break;
-            case 'login':
-                $controller = new AuthController();
-                $controller->login();
-                break;
-            case 'authenticate':
-                $controller = new AuthController();
-                $controller->authenticate();
-                break;
-            case 'logout':
-                $controller = new AuthController();
-                $controller->logout();
-                break;
-            case 'auth':
-                $controller = new AuthController(); // созд экземпл класса
-                // напишем проверку на действие(action)
-                if(isset($_GET['action'])){
-                    switch($_GET['action']){
-                        case 'store':
-                            $controller -> store(); // вызов метода для отработки action=store
-                            break;
-                        case 'authenticate':
-                            $controller -> authenticate(); // вызов метода для отработки action=store
-                            break;
-                    }
-                }else{
-                    $controller -> login();
-                }
-                break;
-            default: // по умолчанию, если страница не найдена(нет нужного GET параметра) выводим 404 и сообщение
-                http_response_code(404);
-                echo "Page not found";
-                break;
+        $uri = $_SERVER['REQUEST_URI'];
+        $controller = null;
+        $action = null;
+        $params = null;
+        // пробегаем по маршрутам(routers), пока не найдем нужный
+        foreach($this->routes as $pattern => $route){
+            // ищем маршрут соответ-ий URI при помощи регулярки
+            if(preg_match($pattern,$uri,$matches)){
+                $controller = "controllers\\".$route['controller']; // получаем имя контроллера с маршрута($route)
+                $action = $route['action'] ?? $matches['action'] ?? 'index'; // получаем действие из маршрута если оно есть, иначе из URI
+                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY); // получаем параметры из совпавших с регуляркоу подсткрок
+                break; // прервем цикл, если нашли нужный маршрут
+            }
         }
+
+
     }
 }
