@@ -5,12 +5,12 @@ use controllers\auth\AuthContoller;
 use controllers\pages\PageController;
 use controllers\roles\RoleController;
 use controllers\users\UserController;
-use controllers\HomeCintroller;
+use controllers\home\HomeController;
 
 class Router{
     // определяем маршруты через регулярки
     private $routes = [
-        '/^\/'.APP_BASE_PATH.'\/?$/' => ['controller'=>'\\HomeController', 'action'=>'index'],
+        '/^\/'.APP_BASE_PATH.'\/?$/' => ['controller'=>'home\\HomeController', 'action'=>'index'],
     ];
 
 
@@ -30,7 +30,19 @@ class Router{
                 break; // прервем цикл, если нашли нужный маршрут
             }
         }
-
+        if(!$controller){
+            http_response_code(404);
+            echo "Page not found";
+            return;
+        }
+        
+        $controllerInstance = new $controller();
+        if(!method_exists($controllerInstance, $action)){
+            http_response_code(404);
+            echo "Page not found";
+            return;
+        }
+        call_user_func_array([$controllerInstance, $action], [$params]);
 
     }
 }
