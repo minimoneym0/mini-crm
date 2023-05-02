@@ -1,6 +1,8 @@
 <?php
+namespace controllers\users;
+use models\roles\Role;
+use models\users\User;
 
-require_once 'app/models/roles/Role.php';
 // контроллеры обрабатывают данные и передают в модель
 class UsersController{
     // метод отображающий всех пользователей

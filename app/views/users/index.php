@@ -4,7 +4,7 @@ $title = 'Users list';
 ob_start();?>
 
 <h1>Users list</h1>
-<a href="?page=users&action=create" class="btn btn-success">Create User</a>
+<a href="/<?= APP_BASE_PATH ?>/users/create" class="btn btn-success">Create User</a>
 <table class='table'>
     <thead>
         <tr>
@@ -30,8 +30,8 @@ ob_start();?>
                 <td><?= $user['is_active'] ? 'Yes' : 'No';?></td>
                 <td><?= $user['last_login'];?></td>
                 <td>
-                    <a href="?page=users&action=edit&id=<?php echo $user['id']; ?>" class="btn btn-primary">Edit</a>
-                    <a href="?page=users&action=delete&id=<?php echo $user['id']; ?>">Delete</a>
+                    <a href="/<?= APP_BASE_PATH ?>/users/edit/<?php echo $user['id']; ?>" class="btn btn-primary">Edit</a>
+                    <a href="/<?= APP_BASE_PATH ?>/users/delete/<?php echo $user['id']; ?>">Delete</a>
                 </td>
             </tr>
             <?php endforeach; ?>

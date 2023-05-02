@@ -17,10 +17,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="?page=users" class="nav-link">Users</a>
+                        <a href="/<?= APP_BASE_PATH ?>/users" class="nav-link">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a href="?page=roles" class="nav-link">Roles</a>
+                        <a href="/<?= APP_BASE_PATH ?>/roles" class="nav-link">Roles</a>
                     </li>
                     <li class="nav-item">
                         <a href="?page=pages" class="nav-link">Pages</a>

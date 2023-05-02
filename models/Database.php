@@ -1,5 +1,5 @@
 <?php
-// app/models/Database.php
+namespace models;
 
 class Database{
     private static $instance = null;
@@ -8,19 +8,18 @@ class Database{
 
     // создаем конструктор с подключением к бд
     private function __construct()
-    {   // объект подключения к бд через PDO
-        $config = require_once __DIR__ . '/../../config.php'; // подключаемся к конфигу
-        $db_host = $config['db_host'];
-        $db_user = $config['db_user'];
-        $db_pass = $config['db_pass'];
-        $db_name_db = $config['db_name_db'];
+    {
+        $db_host = DB_HOST;
+        $db_user = DB_USER;
+        $db_pass = DB_PASS;
+        $db_name_db = DB_NAME;
 
         try{
             // пишем коннектор, будем получать хост и имя БД
             $dsn = "mysql:host=$db_host;dbname=$db_name_db";
-            $this->conn = new PDO($dsn, $db_user, $db_pass); // создаем экземпляр PDO и передаем данные
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // передаем считывание ошибок и исключений
-        }catch(PDOException $e){
+            $this->conn = new \PDO($dsn, $db_user, $db_pass); // создаем экземпляр PDO и передаем данные
+            $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); // передаем считывание ошибок и исключений
+        }catch(\PDOException $e){
             // если подключение не сработает, выведет ошибки
             echo "Connect failed: ".$e->getMessage(); 
         }

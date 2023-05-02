@@ -4,5 +4,5 @@ define('APP_BASE_PATH', 'minicrm'); // указываем корневую па�
 
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
-define('PASS', 'root');
+define('DB_PASS', 'root');
 define('DB_NAME', 'minicrm');

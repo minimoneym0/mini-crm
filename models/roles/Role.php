@@ -1,4 +1,5 @@
 <?php
+namespace models\roles;
 // модель получает данные, применяет нужный метод и пишет в базу
 class Role{
     private $db;

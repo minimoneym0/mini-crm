@@ -4,13 +4,15 @@ namespace app;
 use controllers\auth\AuthContoller;
 use controllers\pages\PageController;
 use controllers\roles\RoleController;
-use controllers\users\UserController;
+use controllers\users\UsersController;
 use controllers\home\HomeController;
 
 class Router{
     // определяем маршруты через регулярки
     private $routes = [
         '/^\/'.APP_BASE_PATH.'\/?$/' => ['controller'=>'home\\HomeController', 'action'=>'index'],
+        '/^\/'.APP_BASE_PATH.'\/[a-z]+/?$/' => ['controller'=>'users\\UsersController'], // для users
+
     ];
 
 
@@ -37,7 +39,7 @@ class Router{
         }
         
         $controllerInstance = new $controller();
-        if(!method_exists($controllerInstance, $action)){
+        if(!method_exists($controllerInstance, strval($action))){
             http_response_code(404);
             echo "Page not found";
             return;
