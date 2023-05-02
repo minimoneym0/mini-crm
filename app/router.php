@@ -11,7 +11,7 @@ class Router{
     // определяем маршруты через регулярки
     private $routes = [
         '/^\/'.APP_BASE_PATH.'\/?$/' => ['controller'=>'home\\HomeController', 'action'=>'index'],
-        '/^\/'.APP_BASE_PATH.'\/[a-z]+/?$/' => ['controller'=>'users\\UsersController'], // для users
+        '/^\/'.APP_BASE_PATH.'\/users(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'users\\UsersController'], // для users
 
     ];
 
@@ -28,7 +28,7 @@ class Router{
             if(preg_match($pattern,$uri,$matches)){
                 $controller = "controllers\\".$route['controller']; // получаем имя контроллера с маршрута($route)
                 $action = $route['action'] ?? $matches['action'] ?? 'index'; // получаем действие из маршрута если оно есть, иначе из URI
-                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY); // получаем параметры из совпавших с регуляркоу подсткрок
+                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY); // получаем параметры из совпавших с регуляркой подстрок
                 break; // прервем цикл, если нашли нужный маршрут
             }
         }
@@ -39,7 +39,7 @@ class Router{
         }
         
         $controllerInstance = new $controller();
-        if(!method_exists($controllerInstance, strval($action))){
+        if(!method_exists($controllerInstance, $action)){
             http_response_code(404);
             echo "Page not found";
             return;
