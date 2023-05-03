@@ -4,7 +4,7 @@ $title = 'Create Page';
 ob_start();?>
 
 <h1>Create Page</h1>
-<form method="post" action="?page=pages&action=store"> <!-- указываем action=store, ссылаясь на метод store в UserController -->
+<form method="post" action="/<?= APP_BASE_PATH ?>/pages/store"> <!-- указываем action=store, ссылаясь на метод store в UserController -->
     <div class="form-group">
         <label for="title">Page title</label>
         <input type="text" class="form-control" id="title" name="title" required>

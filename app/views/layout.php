@@ -26,13 +26,13 @@
                         <a href="/<?= APP_BASE_PATH ?>/pages" class="nav-link">Pages</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/<?= APP_BASE_PATH ?>/register" class="nav-link">Register</a>
+                        <a href="/<?= APP_BASE_PATH ?>/auth/register" class="nav-link">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/<?= APP_BASE_PATH ?>/login" class="nav-link">Login</a>
+                        <a href="/<?= APP_BASE_PATH ?>/auth/login" class="nav-link">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/<?= APP_BASE_PATH ?>/logout" class="nav-link">Logout</a>
+                        <a href="/<?= APP_BASE_PATH ?>/auth/logout" class="nav-link">Logout</a>
                     </li>
                 </ul>
             </div>

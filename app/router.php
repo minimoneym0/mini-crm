@@ -14,9 +14,7 @@ class Router{
         '/^\/'.APP_BASE_PATH.'\/users(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'users\\UsersController'],
         '/^\/'.APP_BASE_PATH.'\/roles(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'roles\\RoleController'],
         '/^\/'.APP_BASE_PATH.'\/pages(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'pages\\PageController'],
-        '/^\/' . APP_BASE_PATH . '\/register(\/(?P<action>[a-z]+))?$/' => ['controller' => 'auth\\AuthController', 'action'=>'register'],
-        '/^\/' . APP_BASE_PATH . '\/login(\/(?P<action>[a-z]+))?$/' => ['controller' => 'auth\\AuthController', 'action'=>'login'],
-        '/^\/' . APP_BASE_PATH . '\/logout(\/(?P<action>[a-z]+))?$/' => ['controller' => 'auth\\AuthController', 'action'=>'logout'],
+        '/^\/' . APP_BASE_PATH . '\/auth(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'auth\\AuthController'],
     ];
 
 

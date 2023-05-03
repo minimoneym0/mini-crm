@@ -29,12 +29,13 @@ class PageController{
             $pageModel = new PageModel();
             $pageModel->createPage($title, $slug);
         }
-        header("Location: index.php?page=pages");
+        $path = '/'. APP_BASE_PATH . '/pages';
+        header("Location: $path");
     }
 
-    public function edit($id){
+    public function edit($params){
         $pageModel = new PageModel();
-        $page = $pageModel->getPageById($id); // получаем страницу
+        $page = $pageModel->getPageById($params['id']); // получаем страницу
 
         if(!$page){
             echo "Role not found";
@@ -58,15 +59,17 @@ class PageController{
             $pageModel = new PageModel();
             $pageModel->updatePage($id, $title, $slug);
         }
-        header("Location: index.php?page=pages");
+        $path = '/'. APP_BASE_PATH . '/pages';
+        header("Location: $path");
     }
 
     // создадим метод для удаления пользователей
-    public function delete(){
+    public function delete($params){
         $pageModel = new PageModel();
-        $pageModel->deletePage($_GET['id']); // вызываем метод для удаления по id
+        $pageModel->deletePage($params['id']); // вызываем метод для удаления по id
 
-        header('Location: index.php?page=pages'); // после удаления перенаправляем на страницу с пользователями
+        $path = '/'. APP_BASE_PATH . '/pages';
+        header("Location: $path"); // после удаления перенаправляем на страницу с пользователями
     }
 
 }

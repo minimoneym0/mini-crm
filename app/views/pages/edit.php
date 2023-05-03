@@ -4,7 +4,7 @@ $title = 'Edit Page';
 ob_start();?>
 
 <h1>Edit Page</h1>
-<form method="post" action="?page=pages&action=update">
+<form method="post" action="/<?= APP_BASE_PATH ?>/pages/update">
     <input type="hidden" name="id" value="<?= $page['id']?>">
     <div class="mb-3">
         <label for="title" class="form-label">Page title</label>
