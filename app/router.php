@@ -14,6 +14,7 @@ class Router{
         '/^\/'.APP_BASE_PATH.'\/users(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'users\\UsersController'],
         '/^\/'.APP_BASE_PATH.'\/roles(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'roles\\RoleController'],
         '/^\/'.APP_BASE_PATH.'\/pages(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'pages\\PageController'],
+        '/^\/'.APP_BASE_PATH.'\/register(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'auth\\AuthController'],
     ];
 
 
@@ -23,7 +24,6 @@ class Router{
         $controller = null;
         $action = null;
         $params = null;
-        echo $uri;
         // пробегаем по маршрутам(routers), пока не найдем нужный
         foreach($this->routes as $pattern => $route){
             // ищем маршрут соответ-ий URI при помощи регулярки
@@ -43,7 +43,7 @@ class Router{
          $controllerInstance = new $controller();
         if(!method_exists($controllerInstance, strval($action))){
             http_response_code(404);
-            echo "Page not found";
+            echo "Page not found!";
             return;
         }
         call_user_func_array([$controllerInstance, $action], [$params]);

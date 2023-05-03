@@ -4,7 +4,7 @@ $title = 'Edit User';
 ob_start();?>
 
 <h1>Edit User</h1>
-<form method="post" action="users/update/<?=$user['id'] ?>"> <!-- указываем action=store, ссылаясь на метод store в UserController -->
+<form method="post" action="/<?= APP_BASE_PATH ?>/users/update/<?=$user['id'] ?>"> <!-- указываем action=store, ссылаясь на метод store в UserController -->
     <div class="form-group">
         <label for="username">Username</label>
         <input type="text" class="form-control" id="username" name="username" value="<?=$user['username']?>" required>

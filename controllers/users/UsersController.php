@@ -36,19 +36,21 @@ class UsersController{
             ];
             $userModel->create($data); // передаем в ф-ю глоб массив с данными из формы
         }
-        //header("Location: ?page=users");
+        $path = '/'.APP_BASE_PATH.'/users';
+        header("Location: $path");
     }
 // создадим метод для удаления пользователей
-    public function delete(){
+    public function delete($params){
         $userModel = new User();
-        $userModel->delete($_GET['id']); // вызываем метод для удаления по id
+        $userModel->delete($params['id']); // вызываем метод для удаления по id
 
-        //header('Location: ?page=users'); // после удаления перенаправляем на страницу с пользователями
+        $path = '/'.APP_BASE_PATH.'/users';
+        header("Location: $path");  // после удаления перенаправляем на страницу с пользователями
     }
 
-    public function edit(){
+    public function edit($params){
         $userModel = new User();
-        $user = $userModel->read($_GET['id']); // получаем пользователя
+        $user = $userModel->read($params['id']); // получаем пользователя
 // для получения ролей пользователя допишем
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
@@ -56,11 +58,12 @@ class UsersController{
         include 'app/views/users/edit.php';
     }
 
-    public function update(){
+    public function update($params){
         $userModel = new User();
-        $userModel->update($_GET['id'], $_POST);
+        $userModel->update($params['id'], $_POST);
 
-        //header('Location: ?page=users'); 
+        $path = '/'.APP_BASE_PATH.'/users';
+        header("Location: $path"); 
     }
 
 }

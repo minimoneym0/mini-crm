@@ -1,5 +1,7 @@
 <?php
-require_once 'app/models/AuthUser.php';
+namespace controllers\auth;
+
+use models\AuthUser;
 
 // контроллеры обрабатывают данные и передают в модель
 class AuthController{

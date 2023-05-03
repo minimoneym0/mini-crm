@@ -4,7 +4,7 @@ $title = 'Create User';
 ob_start();?>
 
 <h1>Create User</h1>
-<form method="post" action="?page=users&action=store"> <!-- указываем action=store, ссылаясь на метод store в UserController -->
+<form method="post" action="/<?= APP_BASE_PATH ?>/users/store"> <!-- указываем action=store, ссылаясь на метод store в UserController -->
     <div class="form-group">
         <label for="username">Username</label>
         <input type="text" class="form-control" id="username" name="username" required>

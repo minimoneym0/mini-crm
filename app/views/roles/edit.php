@@ -4,7 +4,7 @@ $title = 'Edit Role';
 ob_start();?>
 
 <h1>Edit Role</h1>
-<form method="post" action="?page=roles&action=update">
+<form method="post" action="/<?= APP_BASE_PATH ?>/roles/update">
     <input type="hidden" name="id" value="<?= $role['id']?>">
     <div class="mb-3">
         <label for="role_name" class="form-label">Role name</label>

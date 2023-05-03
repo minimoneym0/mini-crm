@@ -62,7 +62,7 @@ class Role{
         try{
             $stmt = $this->db->prepare($query);
             $stmt->execute([$id]);
-            $role = $stmt->fetch(PDO::FETCH_ASSOC);
+            $role = $stmt->fetch(\PDO::FETCH_ASSOC);
             return $role ? $role : false;
         }catch(\PDOException $e){
             return false;

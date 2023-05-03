@@ -29,12 +29,13 @@ class RoleController{
             $roleModel = new Role();
             $roleModel->createRole($role_name, $role_description);
         }
-        header("Location: index.php?page=roles");
+        $path = '/'. APP_BASE_PATH . '/roles';
+        header("Location: $path");
     }
 
-    public function edit($id){
+    public function edit($params){
         $roleModel = new Role();
-        $role = $roleModel->getRoleById($id); // получаем роль
+        $role = $roleModel->getRoleById($params['id']); // получаем роль
 
         if(!$role){
             echo "Role not found";
@@ -58,15 +59,17 @@ class RoleController{
             $roleModel = new Role();
             $roleModel->updateRole($id, $role_name, $role_description);
         }
-        header("Location: index.php?page=roles");
+        $path = '/'. APP_BASE_PATH . '/roles';
+        header("Location: $path");
     }
 
-    // создадим метод для удаления пользователей
-    public function delete(){
+    // создадим метод для удаления ролей
+    public function delete($params){
         $roleModel = new Role();
-        $roleModel->deleteRole($_GET['id']); // вызываем метод для удаления по id
+        $roleModel->deleteRole($params['id']); // вызываем метод для удаления по id
 
-        header('Location: index.php?page=roles'); // после удаления перенаправляем на страницу с пользователями
+        $path = '/'. APP_BASE_PATH . '/roles';
+        header("Location: $path"); // после удаления перенаправляем на страницу с пользователями
     }
 
 }

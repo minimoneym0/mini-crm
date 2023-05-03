@@ -4,7 +4,7 @@ $title = 'Create Role';
 ob_start();?>
 
 <h1>Create Role</h1>
-<form method="post" action="?page=roles&action=store"> <!-- указываем action=store, ссылаясь на метод store в UserController -->
+<form method="post" action="/<?= APP_BASE_PATH ?>/roles/store"> <!-- указываем action=store, ссылаясь на метод store в UserController -->
     <div class="form-group">
         <label for="role_name">Role name</label>
         <input type="text" class="form-control" id="role_name" name="role_name" required>
