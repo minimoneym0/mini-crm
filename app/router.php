@@ -41,7 +41,7 @@ class Router{
         }
         
          $controllerInstance = new $controller();
-        if(!method_exists($controllerInstance, $action)){
+        if(!method_exists($controllerInstance, strval($action))){
             http_response_code(404);
             echo "Page not found";
             return;
