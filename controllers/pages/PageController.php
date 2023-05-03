@@ -1,5 +1,6 @@
 <?php
-require_once 'app/models/pages/PageModel.php';
+namespace controllers\pages;
+use models\pages\PageModel;
 
 // контроллеры обрабатывают данные и передают в модель
 class PageController{

@@ -1,5 +1,7 @@
 <?php
 namespace models\roles;
+
+use models\Database;
 // модель получает данные, применяет нужный метод и пишет в базу
 class Role{
     private $db;
@@ -10,7 +12,7 @@ class Role{
         $this->db = Database::getInstance()->getConnection();
         try{
             $result = $this->db->query("SELECT 1 FROM `roles` LIMIT 1");
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             $this->createDbTable();
         }
     }
@@ -25,7 +27,7 @@ class Role{
             try{
                 $this->db->exec($roleTableQuery);
                 return true;
-            }catch(PDOException $e){
+            }catch(\PDOException $e){
                 return false;
             }
     }
@@ -37,7 +39,7 @@ class Role{
             $stmt->execute(); // запускаем подготовленный запрос на выполнение
             $roles = $stmt->fetchAll(); // получаем массив содержащий все извлеченные строки
             return $roles;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -50,7 +52,7 @@ class Role{
             $stmt = $this->db->prepare($query);
             $stmt->execute([$role_name, $role_description]);
             return true;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -62,7 +64,7 @@ class Role{
             $stmt->execute([$id]);
             $role = $stmt->fetch(PDO::FETCH_ASSOC);
             return $role ? $role : false;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -74,7 +76,7 @@ class Role{
             $stmt->execute([$role_name, $role_description, $id]);
 
             return true;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -86,7 +88,7 @@ class Role{
             $stmt = $this->db->prepare($query);
             $stmt->execute([$id]); 
             return true;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }

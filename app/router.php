@@ -11,17 +11,19 @@ class Router{
     // определяем маршруты через регулярки
     private $routes = [
         '/^\/'.APP_BASE_PATH.'\/?$/' => ['controller'=>'home\\HomeController', 'action'=>'index'],
-        '/^\/'.APP_BASE_PATH.'\/users(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'users\\UsersController'], // для users
-
+        '/^\/'.APP_BASE_PATH.'\/users(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'users\\UsersController'],
+        '/^\/'.APP_BASE_PATH.'\/roles(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'roles\\RoleController'],
+        '/^\/'.APP_BASE_PATH.'\/pages(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller'=>'pages\\PageController'],
     ];
 
 
     // пишем метод, запускающий сам роутер
     public function run(){
-        $uri = $_SERVER['REQUEST_URI'];
+        $uri = $_SERVER['REQUEST_URI']; // /minicrm/users
         $controller = null;
         $action = null;
         $params = null;
+        echo $uri;
         // пробегаем по маршрутам(routers), пока не найдем нужный
         foreach($this->routes as $pattern => $route){
             // ищем маршрут соответ-ий URI при помощи регулярки
@@ -34,17 +36,16 @@ class Router{
         }
         if(!$controller){
             http_response_code(404);
-            echo "Page not found";
+            echo "Page not found?";
             return;
         }
         
-        $controllerInstance = new $controller();
+         $controllerInstance = new $controller();
         if(!method_exists($controllerInstance, $action)){
             http_response_code(404);
             echo "Page not found";
             return;
         }
         call_user_func_array([$controllerInstance, $action], [$params]);
-
     }
 }

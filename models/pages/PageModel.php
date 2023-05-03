@@ -1,4 +1,7 @@
 <?php
+namespace models\pages;
+
+use models\Database;
 // модель получает данные, применяет нужный метод и пишет в базу
 class PageModel{
     private $db;
@@ -9,7 +12,7 @@ class PageModel{
         $this->db = Database::getInstance()->getConnection();
         try{
             $result = $this->db->query("SELECT 1 FROM `pages` LIMIT 1");
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             $this->createDbTable();
         }
     }
@@ -26,7 +29,7 @@ class PageModel{
             try{
                 $this->db->exec($pageTableQuery);
                 return true;
-            }catch(PDOException $e){
+            }catch(\PDOException $e){
                 return false;
             }
     }
@@ -38,7 +41,7 @@ class PageModel{
             $stmt->execute(); // запускаем подготовленный запрос на выполнение
             $pages = $stmt->fetchAll(); // получаем массив содержащий все извлеченные строки
             return $pages;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -51,7 +54,7 @@ class PageModel{
             $stmt = $this->db->prepare($query);
             $stmt->execute([$title, $slug]);
             return true;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -61,9 +64,9 @@ class PageModel{
         try{
             $stmt = $this->db->prepare($query);
             $stmt->execute([$id]);
-            $page = $stmt->fetch(PDO::FETCH_ASSOC);
+            $page = $stmt->fetch(\PDO::FETCH_ASSOC);
             return $page ? $page : false;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -75,7 +78,7 @@ class PageModel{
             $stmt->execute([$title, $slug, $id]);
 
             return true;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -87,7 +90,7 @@ class PageModel{
             $stmt = $this->db->prepare($query);
             $stmt->execute([$id]); 
             return true;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }

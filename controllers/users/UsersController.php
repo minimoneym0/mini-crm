@@ -36,14 +36,14 @@ class UsersController{
             ];
             $userModel->create($data); // передаем в ф-ю глоб массив с данными из формы
         }
-        header("Location: ?page=users");
+        //header("Location: ?page=users");
     }
 // создадим метод для удаления пользователей
     public function delete(){
         $userModel = new User();
         $userModel->delete($_GET['id']); // вызываем метод для удаления по id
 
-        header('Location: ?page=users'); // после удаления перенаправляем на страницу с пользователями
+        //header('Location: ?page=users'); // после удаления перенаправляем на страницу с пользователями
     }
 
     public function edit(){
@@ -60,7 +60,7 @@ class UsersController{
         $userModel = new User();
         $userModel->update($_GET['id'], $_POST);
 
-        header('Location: ?page=users'); 
+        //header('Location: ?page=users'); 
     }
 
 }

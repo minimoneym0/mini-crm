@@ -1,5 +1,6 @@
 <?php
-require_once 'app/models/roles/Role.php';
+namespace controllers\roles;
+use models\roles\Role;
 
 // контроллеры обрабатывают данные и передают в модель
 class RoleController{

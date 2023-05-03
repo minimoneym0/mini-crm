@@ -23,7 +23,7 @@
                         <a href="/<?= APP_BASE_PATH ?>/roles" class="nav-link">Roles</a>
                     </li>
                     <li class="nav-item">
-                        <a href="?page=pages" class="nav-link">Pages</a>
+                        <a href="/<?= APP_BASE_PATH ?>/pages" class="nav-link">Pages</a>
                     </li>
                     <li class="nav-item">
                         <a href="?page=register" class="nav-link">Register</a>

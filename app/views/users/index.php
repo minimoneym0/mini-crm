@@ -2,7 +2,6 @@
 
 $title = 'Users list';
 ob_start();?>
-
 <h1>Users list</h1>
 <a href="/<?= APP_BASE_PATH ?>/users/create" class="btn btn-success">Create User</a>
 <table class='table'>
