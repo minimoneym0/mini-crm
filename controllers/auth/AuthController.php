@@ -7,7 +7,7 @@ use models\AuthUser;
 class AuthController{
     // метод показывает форму регистрации
     public function register(){
-        include 'app/views/users/register.php';
+        include 'app/views/auth/register.php';
     }
 
 
@@ -31,11 +31,12 @@ class AuthController{
             $userModel = new AuthUser();
             $userModel->register($username, $email, $password);
         }
-        header("Location: ?page=login"); // после регистрации, пользователя перенаправляется на страницу авторизации
+        $path = '/'. APP_BASE_PATH. '/users';
+        header("Location: $path"); // после регистрации, пользователя перенаправляется на страницу авторизации
     }
 
     public function login(){     
-        include 'app/views/users/login.php';
+        include 'app/views/auth/login.php';
     }
 
     // метод для аутентификации пользователя
@@ -59,8 +60,8 @@ class AuthController{
                 setcookie('user_email', $email, time() + (7 * 24 * 60 * 60), '/');
                 setcookie('user_password', $password, time() + (7 * 24 * 60 * 60), '/');
             }
-
-            header('Location: index.php');
+            $path = '/'. APP_BASE_PATH. '/users';
+            header("Location: $path");
         }else{
             echo "sory, bad data, try again";
         }
@@ -72,7 +73,8 @@ class AuthController{
         session_start();
         session_unset(); // удаляем все зарегестрированные переменные текущей сессии
         session_destroy(); // уничтожает все данные связанные с текущей сессией
-        header('Location: index.php'); // после удаления перенаправляем на главную
+        $path = '/'. APP_BASE_PATH;
+        header("Location: $path"); // после удаления перенаправляем на главную
     }
 
 }
