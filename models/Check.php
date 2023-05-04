@@ -8,5 +8,7 @@ class Check{
         $parseUrl = parse_url($url); // парсим наш урл на части
 
         $path = $parseUrl['path']; // получаем конечную часть из урла
+        $slug = str_replace(APP_BASE_PATH, '', $path);
+        return ltrim($slug, '/'); // удаляем слеш в начале строки
     }
 }

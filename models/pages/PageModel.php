@@ -74,6 +74,19 @@ class PageModel{
         }
     }
 
+// пишем метод для поиска по слагу
+    public function findBySlug($slug){
+        $query = 'SELECT * FROM pages WHERE slug = ?';
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$slug]);
+            $page = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $page ? $page : false;
+        }catch(\PDOException $e){
+            return false;
+        }
+    }    
+
     public function updatePage($id, $title, $slug, $roles){
         $query = "UPDATE pages SET title = ?, slug = ?, role = ? WHERE id = ?";
         try{
