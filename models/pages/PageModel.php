@@ -47,13 +47,13 @@ class PageModel{
         }
     }
 // метод в котором создаем страницу
-    public function createPage($title, $slug){
+    public function createPage($title, $slug, $role){
 
-        $query = "INSERT INTO pages (title, slug) VALUES (?,?)";
+        $query = "INSERT INTO pages (title, slug, role) VALUES (?,?,?)";
 
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$title, $slug]);
+            $stmt->execute([$title, $slug, $role]);
             return true;
         }catch(\PDOException $e){
             return false;
@@ -72,11 +72,11 @@ class PageModel{
         }
     }
 
-    public function updatePage($id, $title, $slug){
-        $query = "UPDATE pages SET title = ?, slug = ? WHERE id = ?";
+    public function updatePage($id, $title, $slug, $role){
+        $query = "UPDATE pages SET title = ?, slug = ?, role = ? WHERE id = ?";
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$title, $slug, $id]);
+            $stmt->execute([$title, $slug, $role, $id]);
 
             return true;
         }catch(\PDOException $e){

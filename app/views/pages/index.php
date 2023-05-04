@@ -11,6 +11,7 @@ ob_start();?>
             <th scope="col">ID</th>
             <th scope="col">Page title</th>
             <th scope="col">Page slug</th>
+            <th scope="col">Role</th>
             <th scope="col">Action</th>
         </tr>
     </thead>
@@ -20,6 +21,7 @@ ob_start();?>
                 <td><?= $page['id'];?></td>
                 <td><?= $page['title'];?></td>
                 <td><?= $page['slug'];?></td>
+                <td><?= $page['role'];?></td>
                 <td>
                     <a href="/<?= APP_BASE_PATH ?>/pages/edit/<?php echo $page['id']; ?>" class="btn btn-primary">Edit</a>
                     <form method="POST" action="/<?= APP_BASE_PATH ?>/pages/delete/<?= $page['id'] ?>" class="d-inline-block">

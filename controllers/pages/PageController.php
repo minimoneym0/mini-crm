@@ -17,17 +17,18 @@ class PageController{
     }
 
     public function store(){
-        if(isset($_POST['title']) && isset($_POST['slug'])){
+        if(isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['role'])){
             $title = trim($_POST['title']);
             $slug = trim($_POST['slug']);
+            $role = trim($_POST['role']);
 
-            if(empty($title) || empty($slug)){
-                echo "Title or slug fields are required!";
+            if(empty($title) || empty($slug) || empty($slug)) {
+                echo "Title or slug or role fields are required!";
                 return;
             }
 
             $pageModel = new PageModel();
-            $pageModel->createPage($title, $slug);
+            $pageModel->createPage($title, $slug, $role);
         }
         $path = '/'. APP_BASE_PATH . '/pages';
         header("Location: $path");
@@ -46,18 +47,19 @@ class PageController{
     }
 
     public function update(){
-        if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['slug'])){
+        if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['role'])){
             $id = $_POST['id'];
             $title = trim($_POST['title']);
             $slug = trim($_POST['slug']);
+            $role = trim($_POST['role']);
 
-            if(empty($title) || empty($slug)){
+            if(empty($title) || empty($slug) || empty($role)){
                 echo "Title or slug is required";
                 return;
             }
 
             $pageModel = new PageModel();
-            $pageModel->updatePage($id, $title, $slug);
+            $pageModel->updatePage($id, $title, $slug, $role);
         }
         $path = '/'. APP_BASE_PATH . '/pages';
         header("Location: $path");

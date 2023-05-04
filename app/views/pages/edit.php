@@ -14,6 +14,10 @@ ob_start();?>
         <label for="slug" class="form-label">Page slug</label>
         <input type="text" class="form-control" id="slug" name="slug" value="<?=$page['slug']?>" required>
     </div>
+    <div class="mb-3">
+        <label for="role" class="form-label">Role</label>
+        <input type="text" class="form-control" id="role" name="role" value="<?=$page['role']?>" required>
+    </div>
     
     <button class="btn btn-primary" type="submit">Update Page</button>
 </form>

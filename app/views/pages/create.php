@@ -13,6 +13,10 @@ ob_start();?>
         <label for="slug">Page slug</label>
         <input type="text" class="form-control" id="slug" name="slug" required>
     </div>
+    <div class="form-group">
+        <label for="role">Role</label>
+        <input type="text" class="form-control" id="role" name="role" required>
+    </div>
     <button class="btn btn-primary" type="submit">Create Page</button>
 </form>
 
