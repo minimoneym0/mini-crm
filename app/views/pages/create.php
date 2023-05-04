@@ -15,7 +15,10 @@ ob_start();?>
     </div>
     <div class="form-group">
         <label for="role">Role</label>
-        <input type="text" class="form-control" id="role" name="role" required>
+        <?foreach($roles as $role):?>
+            <input type="checkbox" name="roles[]" value="<?= $role['id']?>"><?=$role['role_name'];?>
+        <? endforeach;?>
+
     </div>
     <button class="btn btn-primary" type="submit">Create Page</button>
 </form>

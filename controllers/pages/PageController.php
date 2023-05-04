@@ -1,6 +1,7 @@
 <?php
 namespace controllers\pages;
 use models\pages\PageModel;
+use models\roles\Role;
 
 // контроллеры обрабатывают данные и передают в модель
 class PageController{
@@ -13,28 +14,33 @@ class PageController{
     }
     // пишем метод, который вызывает шаблон страницы
     public function create(){
+        $roleModel = new Role();
+        $roles = $roleModel->getAllRoles();
         include 'app/views/pages/create.php';
     }
 
     public function store(){
-        if(isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['role'])){
+        if(isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['roles'])){
             $title = trim($_POST['title']);
             $slug = trim($_POST['slug']);
-            $role = trim($_POST['role']);
+            $roles = implode(',', $_POST['roles']);
 
-            if(empty($title) || empty($slug) || empty($slug)) {
+            if(empty($title) || empty($slug) || empty($roles)) {
                 echo "Title or slug or role fields are required!";
                 return;
             }
 
             $pageModel = new PageModel();
-            $pageModel->createPage($title, $slug, $role);
+            $pageModel->createPage($title, $slug, $roles);
         }
         $path = '/'. APP_BASE_PATH . '/pages';
         header("Location: $path");
     }
 
     public function edit($params){
+        $roleModel = new Role();
+        $roles = $roleModel->getAllRoles();
+
         $pageModel = new PageModel();
         $page = $pageModel->getPageById($params['id']); // получаем страницу
 
@@ -47,19 +53,19 @@ class PageController{
     }
 
     public function update(){
-        if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['role'])){
+        if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['roles'])){
             $id = $_POST['id'];
             $title = trim($_POST['title']);
             $slug = trim($_POST['slug']);
-            $role = trim($_POST['role']);
+            $roles = implode(',', $_POST['roles']);
 
-            if(empty($title) || empty($slug) || empty($role)){
+            if(empty($title) || empty($slug) || empty($roles)){
                 echo "Title or slug is required";
                 return;
             }
 
             $pageModel = new PageModel();
-            $pageModel->updatePage($id, $title, $slug, $role);
+            $pageModel->updatePage($id, $title, $slug, $roles);
         }
         $path = '/'. APP_BASE_PATH . '/pages';
         header("Location: $path");

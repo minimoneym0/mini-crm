@@ -2,6 +2,8 @@
 namespace models\pages;
 
 use models\Database;
+use models\roles\Role;
+
 // модель получает данные, применяет нужный метод и пишет в базу
 class PageModel{
     private $db;
@@ -47,13 +49,13 @@ class PageModel{
         }
     }
 // метод в котором создаем страницу
-    public function createPage($title, $slug, $role){
+    public function createPage($title, $slug, $roles){
 
         $query = "INSERT INTO pages (title, slug, role) VALUES (?,?,?)";
 
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$title, $slug, $role]);
+            $stmt->execute([$title, $slug, $roles]);
             return true;
         }catch(\PDOException $e){
             return false;
@@ -72,11 +74,11 @@ class PageModel{
         }
     }
 
-    public function updatePage($id, $title, $slug, $role){
+    public function updatePage($id, $title, $slug, $roles){
         $query = "UPDATE pages SET title = ?, slug = ?, role = ? WHERE id = ?";
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$title, $slug, $role, $id]);
+            $stmt->execute([$title, $slug, $roles, $id]);
 
             return true;
         }catch(\PDOException $e){

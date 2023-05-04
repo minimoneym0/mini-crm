@@ -16,7 +16,9 @@ ob_start();?>
     </div>
     <div class="mb-3">
         <label for="role" class="form-label">Role</label>
-        <input type="text" class="form-control" id="role" name="role" value="<?=$page['role']?>" required>
+        <?foreach($roles as $role):?>
+            <input type="checkbox" name="roles[]" value="<?= $role['id']?>"><?=$role['role_name'];?>
+        <? endforeach;?>
     </div>
     
     <button class="btn btn-primary" type="submit">Update Page</button>
