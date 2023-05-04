@@ -1,7 +1,8 @@
 <?php
 
 $title = 'Edit Page';
-ob_start();?>
+ob_start();
+?>
 
 <h1>Edit Page</h1>
 <form method="post" action="/<?= APP_BASE_PATH ?>/pages/update">
@@ -16,8 +17,9 @@ ob_start();?>
     </div>
     <div class="mb-3">
         <label for="role" class="form-label">Role</label>
-        <?foreach($roles as $role):?>
-            <input type="checkbox" name="roles[]" value="<?= $role['id']?>"><?=$role['role_name'];?>
+        <? $page_roles = explode(',',$page['role']);
+        foreach($roles as $role):?>
+            <input type="checkbox" name="roles[]" value="<?= $role['id']?>" <?= in_array($role['id'], $page_roles) ? "checked" : "";?>><?=$role['role_name'];?>
         <? endforeach;?>
     </div>
     
