@@ -52,7 +52,7 @@ class AuthController{
         $user = $authModel->findByEmail($email);
 // если пользователь найден и проверен(успешная авторизация), стартуем сессию и пишем в нее id и роль пользователя
         if($user && password_verify($password, $user['password'])){
-            session_start();
+            //session_start();
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_role'] = $user['role'];
 // если чекбокс отмечен записываем куки пользователя
@@ -69,8 +69,7 @@ class AuthController{
     }
 
     // создадим метод для выхода пользователя из системы
-    public function logout(){
-        session_start();
+    public function logout(){ 
         session_unset(); // удаляем все зарегестрированные переменные текущей сессии
         session_destroy(); // уничтожает все данные связанные с текущей сессией
         $path = '/'. APP_BASE_PATH;

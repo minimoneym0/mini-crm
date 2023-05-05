@@ -2,9 +2,16 @@
 namespace controllers\users;
 use models\roles\Role;
 use models\users\User;
+use models\Check;
 
 // контроллеры обрабатывают данные и передают в модель
 class UsersController{
+    private $check;
+    public function __construct()
+    {
+        $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
+        $this->check = new Check($userRole);
+    }
     // метод отображающий всех пользователей
     public function index(){
         $userModel = new User(); // создаем экземпляр' класса User(находится в моделях)

@@ -1,11 +1,20 @@
 <?php
 namespace controllers\roles;
 use models\roles\Role;
+use models\pages\PageModel;
+use models\Check;
 
 // контроллеры обрабатывают данные и передают в модель
 class RoleController{
+    private $check;
+    public function __construct()
+    {
+        $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
+        $this->check = new Check($userRole);
+    }
     // метод отображающий всех пользователей
     public function index(){
+        $this->check->requirePermission();
         $roleModel = new Role(); // создаем экземпляр класса Role(находится в моделях)
         $roles = $roleModel->getAllRoles(); // получаем роли из модели
 
@@ -34,6 +43,7 @@ class RoleController{
     }
 
     public function edit($params){
+        $this->check->requirePermission();
         $roleModel = new Role();
         $role = $roleModel->getRoleById($params['id']); // получаем роль
 
