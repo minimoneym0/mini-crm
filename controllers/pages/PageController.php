@@ -6,21 +6,16 @@ use models\Check;
 
 // контроллеры обрабатывают данные и передают в модель
 class PageController{
-    private $check; // будет храниться slug страницы
-
+    private $check;
     public function __construct()
     {
-        $this->check = new Check();
+        $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
+        $this->check = new Check($userRole);
     }
+    
     // метод отображающий всех пользователей
     public function index(){
-        $slug = $this->check->getCurUrlSlug(); // получаем slug
-        //проверим права пользователя и если нет прав выкинем на главную
-        if(!$this->checkPermission($slug)){
-            $path = '/'. APP_BASE_PATH;
-            header("Location: $path");
-            return;
-        }
+        $this->check->requirePermission();
 
         $pageModel = new PageModel(); // создаем экземпляр класса Role(находится в моделях)
         $pages = $pageModel->getAllPages(); // получаем роли из модели
@@ -95,21 +90,5 @@ class PageController{
         header("Location: $path"); // после удаления перенаправляем на страницу с пользователями
     }
 
-    // 
-    public function checkPermission($slug){
-        // получим инфо о странице по slug
-        $pageModel = new PageModel();
-        $page = $pageModel->findBySlug($slug);
-        if(!$page) return false;
-
-        // получим разрешенные роли для страницы
-        $allOwedRoles = explode(',', $page['role']);
-        // проверим, имеет ли текущий пользователь доступ к странице
-        if(isset($_SESSION['user_role']) && in_array($_SESSION['user_role'], $allOwedRoles)){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
 }
