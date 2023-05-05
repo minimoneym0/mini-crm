@@ -50,6 +50,7 @@ class UsersController{
     }
 // создадим метод для удаления пользователей
     public function delete($params){
+        $this->check->requirePermission();
         $userModel = new User();
         $userModel->delete($params['id']); // вызываем метод для удаления по id
 
@@ -69,6 +70,8 @@ class UsersController{
     }
 
     public function update($params){
+        $this->check->requirePermission();
+
         $userModel = new User();
         $userModel->update($params['id'], $_POST);
 

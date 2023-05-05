@@ -72,7 +72,7 @@ class AuthController{
     public function logout(){ 
         session_unset(); // удаляем все зарегестрированные переменные текущей сессии
         session_destroy(); // уничтожает все данные связанные с текущей сессией
-        $path = '/'. APP_BASE_PATH;
+        $path = '/'. APP_BASE_PATH.'/auth/login';
         header("Location: $path"); // после удаления перенаправляем на главную
     }
 

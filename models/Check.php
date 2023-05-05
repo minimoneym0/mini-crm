@@ -49,4 +49,8 @@ class Check{
             exit();
         }
     }
+
+    // public function isCurUserRole($role){
+    //     return $this->userRole == $role;
+    // }
 }

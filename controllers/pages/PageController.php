@@ -31,6 +31,7 @@ class PageController{
     }
 
     public function store(){
+        $this->check->requirePermission();
         if(isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['roles'])){
             $title = trim($_POST['title']);
             $slug = trim($_POST['slug']);
@@ -65,6 +66,7 @@ class PageController{
     }
 
     public function update(){
+        $this->check->requirePermission();
         if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['roles'])){
             $id = $_POST['id'];
             $title = trim($_POST['title']);
@@ -85,6 +87,7 @@ class PageController{
 
     // создадим метод для удаления пользователей
     public function delete($params){
+        $this->check->requirePermission();
         $pageModel = new PageModel();
         $pageModel->deletePage($params['id']); // вызываем метод для удаления по id
 
