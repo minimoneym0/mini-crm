@@ -24,6 +24,7 @@ class PageController{
     }
     // пишем метод, который вызывает шаблон страницы
     public function create(){
+        $this->check->requirePermission();
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
         include 'app/views/pages/create.php';
@@ -48,6 +49,7 @@ class PageController{
     }
 
     public function edit($params){
+        $this->check->requirePermission();
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
 

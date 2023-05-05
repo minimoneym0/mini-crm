@@ -14,6 +14,7 @@ class UsersController{
     }
     // метод отображающий всех пользователей
     public function index(){
+        $this->check->requirePermission();
         $userModel = new User(); // создаем экземпляр' класса User(находится в моделях)
         $users = $userModel->readAll(); // получаем пользователей из модели User
 
@@ -21,6 +22,7 @@ class UsersController{
     }
     // пишем метод, который вызывает шаблон страницы
     public function create(){
+        $this->check->requirePermission();
         include 'app/views/users/create.php';
     }
 
@@ -56,6 +58,7 @@ class UsersController{
     }
 
     public function edit($params){
+        $this->check->requirePermission();
         $userModel = new User();
         $user = $userModel->read($params['id']); // получаем пользователя
 // для получения ролей пользователя допишем

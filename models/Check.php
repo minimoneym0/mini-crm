@@ -17,10 +17,10 @@ class Check{
 
         $path = $parseUrl['path']; // получаем конечную часть из урла
         $pathWithoutBase = str_replace(APP_BASE_PATH, '', $path);
-
+// сегментируем на части
         $segments = explode('/', ltrim($pathWithoutBase, '/'));
-        $firstTwoSegments = array_slice($segments, 0, 2);
-        $slug = implode('/', $firstTwoSegments);
+        $firstTwoSegments = array_slice($segments, 0, 2); // берем первые 2 элем массива
+        $slug = implode('/', $firstTwoSegments); // соединяем в строку через слеш
         return $slug; // удаляем слеш в начале строки
     }
 
