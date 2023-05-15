@@ -4,7 +4,7 @@ use models\todo\category\CategoryModel;
 use models\Check;
 
 // контроллеры обрабатывают данные и передают в модель
-class RoleController{
+class CategoryController{
     private $check;
     public function __construct()
     {
@@ -14,14 +14,15 @@ class RoleController{
     // метод отображающий всех пользователей
     public function index(){
         $this->check->requirePermission();
-        $roleModel = new Role(); // создаем экземпляр класса Role(находится в моделях)
-        $roles = $roleModel->getAllRoles(); // получаем роли из модели
+        $todoCategory = new CategoryModel(); // создаем экземпляр класса Role(находится в моделях)
+        $categories = $todoCategory->getAllCategories(); // получаем роли из модели
 
-        include 'app/views/roles/index.php'; // подключаем файл, который будет html шаблоном для списка пользователей
+        include 'app/views/todo/category/index.php'; // подключаем файл, который будет html шаблоном для списка пользователей
     }
     // пишем метод, который вызывает шаблон страницы
     public function create(){
-        include 'app/views/roles/create.php';
+        $this->check->requirePermission();
+        include 'app/views/todo/category/create.php';
     }
 
     public function store(){

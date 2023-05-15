@@ -2,8 +2,9 @@
 namespace models\todo\category;
 
 use models\Database;
+
 // модель получает данные, применяет нужный метод и пишет в базу
-class Role{
+class CategoryModel{
     private $db;
     // конструктором подключаемся к БД, через созданные ранее ф-ии в классе Database
     // затем смотрим, если таблица с пользователями уже есть, то ничего не делаем, если нет, то отправляем запрос на создание таблицы users
@@ -11,17 +12,20 @@ class Role{
     {
         $this->db = Database::getInstance()->getConnection();
         try{
-            $result = $this->db->query("SELECT 1 FROM `roles` LIMIT 1");
+            $result = $this->db->query("SELECT 1 FROM `todo_category` LIMIT 1");
         }catch(\PDOException $e){
             $this->createDbTable();
         }
     }
 
     public function createDbTable(){
-        $roleTableQuery = "CREATE TABLE IF NOT EXISTS `roles`(
+        $roleTableQuery = "CREATE TABLE IF NOT EXISTS `todo_category`(
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            `role_name` VARCHAR(255) NOT NULL,
-            `role_description` TEXT
+            `title` VARCHAR(255) NOT NULL,
+            `description` TEXT,
+            'usability' TINYINT DEFAULT 1,
+            'user' INT NOT NULL, 
+            FOREING KEY (user) REFERENCES users(id) ON DELETE CASCADE
         )";
 
             try{
