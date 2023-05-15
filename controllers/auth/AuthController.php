@@ -10,7 +10,6 @@ class AuthController{
         include 'app/views/auth/register.php';
     }
 
-
     public function store(){
         if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])){
             $username = trim($_POST['username']);

@@ -50,8 +50,7 @@ class RoleController{
         if(!$role){
             echo "Role not found";
             return;
-        }
-        
+        } 
         include 'app/views/roles/edit.php';
     }
 
