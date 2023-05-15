@@ -36,48 +36,48 @@ class CategoryModel{
             }
     }
 // пишем метод для получения всех ролей
-    public function getAllRoles(){
-        $query = "SELECT * FROM `roles`";
+    public function getAllCategories(){
+        $query = "SELECT * FROM `todo_category`";
         try{
             $stmt = $this->db->prepare($query); // подготавливаем запрос
             $stmt->execute(); // запускаем подготовленный запрос на выполнение
-            $roles = $stmt->fetchAll(); // получаем массив содержащий все извлеченные строки
-            return $roles;
+            $todo_category = $stmt->fetchAll(); // получаем массив содержащий все извлеченные строки
+            return $todo_category;
         }catch(\PDOException $e){
             return false;
         }
     }
 // метод в котором создаем роль
-    public function createRole($role_name, $role_description){
+    public function createCategory($title, $description, $user_id){
 
-        $query = "INSERT INTO roles (role_name, role_description) VALUES (?,?)";
+        $query = "INSERT INTO todo_category (title, description, user_id) VALUES (?,?,?)";
 
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$role_name, $role_description]);
+            $stmt->execute([$title, $description, $user_id]);
             return true;
         }catch(\PDOException $e){
             return false;
         }
     }
 // метод для получения конкретной роли по id
-    public function getRoleById($id){
-        $query = 'SELECT * FROM roles WHERE id = ?';
+    public function getCategoryById($id){
+        $query = 'SELECT * FROM todo_category WHERE id = ?';
         try{
             $stmt = $this->db->prepare($query);
             $stmt->execute([$id]);
-            $role = $stmt->fetch(\PDO::FETCH_ASSOC);
-            return $role ? $role : false;
+            $todo_category = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $todo_category ? $todo_category : false;
         }catch(\PDOException $e){
             return false;
         }
     }
 
-    public function updateRole($id, $role_name, $role_description){
-        $query = "UPDATE roles SET role_name = ?, role_description = ? WHERE id = ?";
+    public function updateCategory($id, $title, $description, $usability){
+        $query = "UPDATE todo_category SET title = ?, description = ?, usability = ? WHERE id = ?";
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$role_name, $role_description, $id]);
+            $stmt->execute([$title, $description, $usability,$id]);
 
             return true;
         }catch(\PDOException $e){
@@ -85,8 +85,8 @@ class CategoryModel{
         }
     }
 
-    public function deleteRole($id){
-        $query = 'DELETE FROM roles WHERE id = ?'; // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
+    public function deleteCategory($id){
+        $query = 'DELETE FROM todo_category WHERE id = ?'; // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
 
         try{
             $stmt = $this->db->prepare($query);
