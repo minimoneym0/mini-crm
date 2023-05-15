@@ -17,22 +17,28 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="/<?= APP_BASE_PATH ?>/users" class="nav-link">Users</a>
+                        <a href="/<?= APP_BASE_PATH ?>/users" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/users') ?>">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/<?= APP_BASE_PATH ?>/roles" class="nav-link">Roles</a>
+                        <a href="/<?= APP_BASE_PATH ?>/roles" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/roles') ?>">Roles</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/<?= APP_BASE_PATH ?>/pages" class="nav-link">Pages</a>
+                        <a href="/<?= APP_BASE_PATH ?>/pages" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/pages') ?>">Pages</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/<?= APP_BASE_PATH ?>/auth/register" class="nav-link">Register</a>
+                        <a href="/<?= APP_BASE_PATH ?>/auth/register" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/auth/register') ?>">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/<?= APP_BASE_PATH ?>/auth/login" class="nav-link">Login</a>
+                        <a href="/<?= APP_BASE_PATH ?>/auth/login" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/auth/login') ?>">Login</a>
                     </li>
                     <li class="nav-item">
                         <a href="/<?= APP_BASE_PATH ?>/auth/logout" class="nav-link">Logout</a>
+                    </li>
+                </ul>
+                <h3>TODO list : </h3>
+                <ul>
+                    <li class="nav-item">
+                        <a href="/<?= APP_BASE_PATH ?>/todo/category" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/todo/category') ?>">Category</a>
                     </li>
                 </ul>
             </div>

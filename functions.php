@@ -12,3 +12,8 @@ function preExit($str){
     echo "<pre>";
     exit;
 }
+
+function is_active($path){
+    $currentPath = $_SERVER['REQUEST_URI']; // получает текущий урл
+    return $path === $currentPath ? 'active' :''; 
+}
