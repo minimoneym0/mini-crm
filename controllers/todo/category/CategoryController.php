@@ -13,7 +13,7 @@ class CategoryController{
     }
     // метод отображающий всех пользователей
     public function index(){
-        $this->check->requirePermission();
+        //$this->check->requirePermission();
         $todoCategory = new CategoryModel(); // создаем экземпляр класса Role(находится в моделях)
         $categories = $todoCategory->getAllCategories(); // получаем роли из модели
 
@@ -21,63 +21,65 @@ class CategoryController{
     }
     // пишем метод, который вызывает шаблон страницы
     public function create(){
-        $this->check->requirePermission();
         include 'app/views/todo/category/create.php';
     }
 
     public function store(){
-        if(isset($_POST['role_name']) && isset($_POST['role_description'])){
-            $role_name = trim($_POST['role_name']);
-            $role_description = trim($_POST['role_description']);
+        if(isset($_POST['title']) && isset($_POST['description'])){
+            $title = trim($_POST['title']);
+            $description = trim($_POST['description']);
+            $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
-            if(empty($role_name)){
-                echo "Role name is required!";
+            if(empty($title) || empty($description)){
+                echo "Title and Description is required!";
                 return;
             }
 
-            $roleModel = new Role();
-            $roleModel->createRole($role_name, $role_description);
+            $todoCategoryModel = new CategoryModel();
+            $todoCategoryModel->createCategory($title, $description, $user_id);
         }
-        $path = '/'. APP_BASE_PATH . '/roles';
+        $path = '/'. APP_BASE_PATH . '/todo/category';
         header("Location: $path");
     }
 
     public function edit($params){
         $this->check->requirePermission();
-        $roleModel = new Role();
-        $role = $roleModel->getRoleById($params['id']); // получаем роль
+        
+        $todoCategoryModel = new CategoryModel();
+        $category = $todoCategoryModel->getCategoryById($params['id']); // получаем роль
 
-        if(!$role){
-            echo "Role not found";
+        if(!$category){
+            echo "Category not found";
             return;
         } 
-        include 'app/views/roles/edit.php';
+        include 'app/views/todo/category/edit.php';
     }
 
-    public function update(){
-        if(isset($_POST['id']) && isset($_POST['role_name']) && isset($_POST['role_description'])){
+    public function update($params){
+        if(isset($params['id']) && isset($_POST['title']) && isset($_POST['description'])){
             $id = trim($_POST['id']);
-            $role_name = trim($_POST['role_name']);
-            $role_description = trim($_POST['role_description']);
+            $title = trim($_POST['title']);
+            $description = trim($_POST['description']);
+            $usability = isset($_POST['usability']) ? $_POST['usability'] : 0;
 
-            if(empty($role_name)){
-                echo "Role name is required";
+            if(empty($title) || empty($description)){
+                echo "title and description is required";
                 return;
             }
 
-            $roleModel = new Role();
-            $roleModel->updateRole($id, $role_name, $role_description);
+            $todoCategoryModel = new CategoryModel();
+            $todoCategoryModel->updateCategory($id, $title, $description, $usability);
         }
-        $path = '/'. APP_BASE_PATH . '/roles';
+        $path = '/'. APP_BASE_PATH . '/todo/category';
         header("Location: $path");
     }
 
     // создадим метод для удаления ролей
     public function delete($params){
-        $roleModel = new Role();
-        $roleModel->deleteRole($params['id']); // вызываем метод для удаления по id
+        $todoCategoryModel = new CategoryModel();
+        $todoCategoryModel->deleteCategory($params['id']); // вызываем метод для удаления по id
 
-        $path = '/'. APP_BASE_PATH . '/roles';
+        $path = '/'. APP_BASE_PATH . '/todo/category';
         header("Location: $path"); // после удаления перенаправляем на страницу с пользователями
     }
 

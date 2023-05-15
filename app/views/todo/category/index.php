@@ -1,27 +1,31 @@
 <?php
 
-$title = 'Roles list';
+$title = 'TODO Category list';
 ob_start();?>
 
-<h1>Roles list</h1>
+<h1>TODO Category list</h1>
+<a href="/<?= APP_BASE_PATH ?>/todo/category/create">Create Category</a>
 <table class='table'>
     <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Role name</th>
-            <th scope="col">Role description</th>
-            <th scope="col">Action</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Usability</th>
+            <th scope="col">User</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach($roles as $role):?>
+        <?php foreach($categories as $category):?>
             <tr>
-                <td><?= $role['id'];?></td>
-                <td><?= $role['role_name'];?></td>
-                <td><?= $role['role_description'];?></td>
+                <td><?= $category['id'];?></td>
+                <td><?= $category['title'];?></td>
+                <td><?= $category['description'];?></td>
+                <td><?= $category['usability'];?></td>
+                <td><?= $category['user'];?></td>
                 <td>
-                    <a href="/<?= APP_BASE_PATH ?>/roles/edit/<?=$role['id']; ?>" class="btn btn-primary">Edit</a>
-                    <form method="POST" action="/<?= APP_BASE_PATH ?>/roles/delete/<?= $role['id'] ?>" class="d-inline-block">
+                    <a href="/<?= APP_BASE_PATH ?>/todo/category/edit/<?=$category['id']; ?>" class="btn btn-primary">Edit</a>
+                    <form method="POST" action="/<?= APP_BASE_PATH ?>/todo/category/delete/<?= $category['id'] ?>" class="d-inline-block">
                     <!-- <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button> -->
                     </form>
                 </td>

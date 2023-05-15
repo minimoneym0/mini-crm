@@ -19,17 +19,17 @@ class CategoryModel{
     }
 
     public function createDbTable(){
-        $roleTableQuery = "CREATE TABLE IF NOT EXISTS `todo_category`(
+        $todoTableQuery = "CREATE TABLE IF NOT EXISTS `todo_category`(
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `title` VARCHAR(255) NOT NULL,
             `description` TEXT,
-            'usability' TINYINT DEFAULT 1,
-            'user' INT NOT NULL, 
-            FOREING KEY (user) REFERENCES users(id) ON DELETE CASCADE
+            `usability` TINYINT DEFAULT 1,
+            `user` INT NOT NULL, 
+            FOREIGN KEY (user) REFERENCES users(id) ON DELETE CASCADE
         )";
 
             try{
-                $this->db->exec($roleTableQuery);
+                $this->db->exec($todoTableQuery);
                 return true;
             }catch(\PDOException $e){
                 return false;
@@ -50,7 +50,7 @@ class CategoryModel{
 // метод в котором создаем роль
     public function createCategory($title, $description, $user_id){
 
-        $query = "INSERT INTO todo_category (title, description, user_id) VALUES (?,?,?)";
+        $query = "INSERT INTO todo_category (title, description, user) VALUES (?,?,?)";
 
         try{
             $stmt = $this->db->prepare($query);
