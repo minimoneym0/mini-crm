@@ -37,7 +37,7 @@ class CategoryModel{
     }
 // пишем метод для получения всех ролей
     public function getAllCategories(){
-        $query = "SELECT * FROM `todo_category`";
+        $query = "SELECT * FROM todo_category";
         try{
             $stmt = $this->db->prepare($query); // подготавливаем запрос
             $stmt->execute(); // запускаем подготовленный запрос на выполнение
@@ -73,11 +73,11 @@ class CategoryModel{
         }
     }
 
-    public function updateCategory($id, $title, $description, $usability){
-        $query = "UPDATE todo_category SET title = ?, description = ?, usability = ? WHERE id = ?";
+    public function updateCategory($id, $title, $description){
+        $query = "UPDATE todo_category SET title = ?, description = ? WHERE id = ?";
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$title, $description, $usability,$id]);
+            $stmt->execute([$title, $description, $id]);
 
             return true;
         }catch(\PDOException $e){

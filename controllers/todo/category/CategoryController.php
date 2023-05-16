@@ -43,7 +43,6 @@ class CategoryController{
     }
 
     public function edit($params){
-        $this->check->requirePermission();
         
         $todoCategoryModel = new CategoryModel();
         $category = $todoCategoryModel->getCategoryById($params['id']); // получаем роль
@@ -55,12 +54,12 @@ class CategoryController{
         include 'app/views/todo/category/edit.php';
     }
 
-    public function update($params){
-        if(isset($params['id']) && isset($_POST['title']) && isset($_POST['description'])){
+    public function update(){
+        if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description'])){
             $id = trim($_POST['id']);
             $title = trim($_POST['title']);
             $description = trim($_POST['description']);
-            $usability = isset($_POST['usability']) ? $_POST['usability'] : 0;
+            //$usability = isset($_POST['usability']) ? $_POST['usability'] : 0;
 
             if(empty($title) || empty($description)){
                 echo "title and description is required";
@@ -68,7 +67,7 @@ class CategoryController{
             }
 
             $todoCategoryModel = new CategoryModel();
-            $todoCategoryModel->updateCategory($id, $title, $description, $usability);
+            $todoCategoryModel->updateCategory($id, $title, $description);
         }
         $path = '/'. APP_BASE_PATH . '/todo/category';
         header("Location: $path");

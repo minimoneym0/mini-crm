@@ -10,8 +10,8 @@ ob_start();?>
         <input type="text" class="form-control" id="title" name="title" required>
     </div>
     <div class="form-group">
-        <label for="descripton">Description</label>
-        <textarea class="form-control" id="descripton" name="descripton" required></textarea>
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description" required></textarea>
     </div>
     <button class="btn btn-primary" type="submit">Create Description</button>
 </form>

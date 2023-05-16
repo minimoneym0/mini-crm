@@ -26,7 +26,7 @@ ob_start();?>
                 <td>
                     <a href="/<?= APP_BASE_PATH ?>/todo/category/edit/<?=$category['id']; ?>" class="btn btn-primary">Edit</a>
                     <form method="POST" action="/<?= APP_BASE_PATH ?>/todo/category/delete/<?= $category['id'] ?>" class="d-inline-block">
-                    <!-- <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button> -->
+                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
                 </td>
             </tr>
