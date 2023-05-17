@@ -14,6 +14,10 @@ ob_start();?>
         <label for="description" class="form-label">Category description</label>
         <textarea class="form-control" id="description" name="description" required><?=$category['description']?></textarea>
     </div>
+    <div class="mb-3">
+        <label for="usability" class="form-label">Usability</label>
+        <input type="checkbox" class="form-check-input" id="usability" name="usability" value="1" <?= $category['usability'] ? 'checked' : '';?>>
+    </div>
     
     <button class="btn btn-primary" type="submit">Update Category</button>
 </form>

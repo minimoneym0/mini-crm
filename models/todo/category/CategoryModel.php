@@ -73,11 +73,11 @@ class CategoryModel{
         }
     }
 
-    public function updateCategory($id, $title, $description){
-        $query = "UPDATE todo_category SET title = ?, description = ? WHERE id = ?";
+    public function updateCategory($id, $title, $description, $usability){
+        $query = "UPDATE todo_category SET title = ?, description = ?, usability = ? WHERE id = ?";
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$title, $description, $id]);
+            $stmt->execute([$title, $description, $usability, $id]);
 
             return true;
         }catch(\PDOException $e){

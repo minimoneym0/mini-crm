@@ -36,7 +36,7 @@
                     </li>
                 </ul>
                 <h3>TODO list : </h3>
-                <ul>
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a href="/<?= APP_BASE_PATH ?>/todo/category" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/todo/category') ?>">Category</a>
                     </li>

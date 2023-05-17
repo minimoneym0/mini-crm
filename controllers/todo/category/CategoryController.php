@@ -59,7 +59,7 @@ class CategoryController{
             $id = trim($_POST['id']);
             $title = trim($_POST['title']);
             $description = trim($_POST['description']);
-            //$usability = isset($_POST['usability']) ? $_POST['usability'] : 0;
+            $usability = isset($_POST['usability']) ? $_POST['usability'] : 0;
 
             if(empty($title) || empty($description)){
                 echo "title and description is required";
@@ -67,7 +67,7 @@ class CategoryController{
             }
 
             $todoCategoryModel = new CategoryModel();
-            $todoCategoryModel->updateCategory($id, $title, $description);
+            $todoCategoryModel->updateCategory($id, $title, $description, $usability);
         }
         $path = '/'. APP_BASE_PATH . '/todo/category';
         header("Location: $path");

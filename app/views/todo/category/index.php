@@ -21,7 +21,7 @@ ob_start();?>
                 <td><?= $category['id'];?></td>
                 <td><?= $category['title'];?></td>
                 <td><?= $category['description'];?></td>
-                <td><?= $category['usability'];?></td>
+                <td><?= $category['usability']==1 ? "YES" : "NO";?></td>
                 <td><?= $category['user'];?></td>
                 <td>
                     <a href="/<?= APP_BASE_PATH ?>/todo/category/edit/<?=$category['id']; ?>" class="btn btn-primary">Edit</a>
