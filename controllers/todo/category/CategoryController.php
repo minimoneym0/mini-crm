@@ -13,7 +13,7 @@ class CategoryController{
     }
     // метод отображающий всех пользователей
     public function index(){
-        //$this->check->requirePermission();
+        $this->check->requirePermission();
         $todoCategory = new CategoryModel(); // создаем экземпляр класса Role(находится в моделях)
         $categories = $todoCategory->getAllCategories(); // получаем роли из модели
 
@@ -43,7 +43,7 @@ class CategoryController{
     }
 
     public function edit($params){
-        
+        $this->check->requirePermission();
         $todoCategoryModel = new CategoryModel();
         $category = $todoCategoryModel->getCategoryById($params['id']); // получаем роль
 
@@ -55,6 +55,7 @@ class CategoryController{
     }
 
     public function update(){
+        $this->check->requirePermission();
         if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description'])){
             $id = trim($_POST['id']);
             $title = trim($_POST['title']);
@@ -75,6 +76,7 @@ class CategoryController{
 
     // создадим метод для удаления ролей
     public function delete($params){
+        $this->check->requirePermission();
         $todoCategoryModel = new CategoryModel();
         $todoCategoryModel->deleteCategory($params['id']); // вызываем метод для удаления по id
 
