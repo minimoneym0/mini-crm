@@ -25,14 +25,40 @@ ob_start();?>
                         <p><strong><i class="fa-solid fa-hourglass-start"></i> Due Date:</strong> <?php echo htmlspecialchars($task['finish_date']); ?></p>
                         <p><strong><i class="fa-solid fa-file-prescription"></i> Description:</strong> <?php echo htmlspecialchars($task['description'] ?? ''); ?></p>
                         <div class="d-flex justify-content-end">
-                            <a href="edit.php?id=<?php echo $task['id']; ?>" class="btn btn-primary me-2">Edit</a>
-                            <button class="btn btn-danger">Delete</button>
+                            <a href="/<?= APP_BASE_PATH ?>/todo/tasks/edit/<?php echo $task['id']; ?>" class="btn btn-primary me-2">Edit</a>
+                            <a href="/<?= APP_BASE_PATH ?>/todo/tasks/delete/<?php echo $task['id']; ?>" class="btn btn-danger me-2">Delete</a>
                         </div>
                     </div>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
+
+
+<script>
+    function updateRemainingTime() {
+        const dueDateElements = document.querySelectorAll('.due-date');
+        const now = new Date();
+
+        dueDateElements.forEach((element) => {
+            const dueDate = new Date(element.textContent);
+            const timeDiff = dueDate - now;
+
+            if (timeDiff > 0) {
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+                element.textContent = `Days: ${days} Hours: ${hours}`;
+            } else {
+                element.textContent = 'Time is up';
+            }
+        });
+    }
+
+    updateRemainingTime();
+    setInterval(updateRemainingTime, 60000); // Update every minute
+</script>
 
     
 

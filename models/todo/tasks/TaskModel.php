@@ -84,7 +84,7 @@ class TaskModel{
     }
 
     public function updateCategory($id, $title, $description, $usability){
-        $query = "UPDATE todo_category SET title = ?, description = ?, usability = ? WHERE id = ?";
+        $query = "UPDATE todo_list SET title = ?, description = ?, usability = ? WHERE id = ?";
         try{
             $stmt = $this->db->prepare($query);
             $stmt->execute([$title, $description, $usability, $id]);
@@ -95,8 +95,8 @@ class TaskModel{
         }
     }
 
-    public function deleteCategory($id){
-        $query = 'DELETE FROM todo_category WHERE id = ?'; // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
+    public function deleteTask($id){
+        $query = 'DELETE FROM todo_list WHERE id = ?'; // знак вопроса пишем, чтобы к модели нельзя было обратиться из вне(иньекции и тд)
 
         try{
             $stmt = $this->db->prepare($query);

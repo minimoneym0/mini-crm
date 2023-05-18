@@ -49,18 +49,23 @@ class TaskController{
 
     public function edit($params){
         $this->check->requirePermission();
-        $todoCategoryModel = new TaskModel();
-        $category = $todoCategoryModel->getCategoryById($params['id']); // получаем роль
+        
+        $taskModel = new TaskModel();
+        $task = $taskModel->getTaskById($params['id']);
 
-        if(!$category){
-            echo "Category not found";
+        $todoCategoryModel = new TaskModel();
+        $category = $todoCategoryModel->getTaskById($params['id']); // получаем роль
+
+        if(!$task){
+            echo "Task not found";
             return;
         } 
+
         include 'app/views/todo/tasks/edit.php';
     }
 
     public function update(){
-        $this->check->requirePermission();
+        //$this->check->requirePermission();
         if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description'])){
             $id = trim($_POST['id']);
             $title = trim($_POST['title']);
@@ -72,18 +77,18 @@ class TaskController{
                 return;
             }
 
-            $todoCategoryModel = new TaskModel();
+            $todoCategoryModel = new CategoryModel();
             $todoCategoryModel->updateCategory($id, $title, $description, $usability);
         }
-        $path = '/'. APP_BASE_PATH . '/todo/tasks';
+        $path = '/'. APP_BASE_PATH . '/todo/category';
         header("Location: $path");
     }
 
     // создадим метод для удаления ролей
     public function delete($params){
-        $this->check->requirePermission();
+        //$this->check->requirePermission();
         $todoCategoryModel = new TaskModel();
-        $todoCategoryModel->deleteCategory($params['id']); // вызываем метод для удаления по id
+        $todoCategoryModel->deleteTask($params['id']); // вызываем метод для удаления по id
 
         $path = '/'. APP_BASE_PATH . '/todo/tasks';
         header("Location: $path"); // после удаления перенаправляем на страницу с пользователями
