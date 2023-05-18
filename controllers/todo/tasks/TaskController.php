@@ -14,7 +14,7 @@ class TaskController{
     }
     // метод отображающий всех пользователей
     public function index(){
-        $this->check->requirePermission();
+        //$this->check->requirePermission();
         $taskModel = new TaskModel(); // создаем экземпляр класса Role(находится в моделях)
         $tasks = $taskModel->getAllTasks(); // получаем роли из модели
 

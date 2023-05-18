@@ -29,14 +29,13 @@ class TaskModel{
             `priority` ENUM('low', 'medium', 'high', 'urgent') NOT NULL, 
             `assigned_to` INT, 
             `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP, 
-            `update_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+            `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
             `finish_date` DATETIME,
             `completed_at` DATETIME,
             `reminder_at` DATETIME,
-            `user` INT NOT NULL, 
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-            FOREIGN KEY (category_id) REFERENCES todo_category(id) ON DELETE SET NULL,
-            FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL,
+            FOREIGN KEY (category_id) REFERENCES todo_category(id),
+            FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL
         )";
 
             try{

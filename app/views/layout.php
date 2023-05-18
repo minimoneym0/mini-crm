@@ -40,6 +40,9 @@
                     <li class="nav-item">
                         <a href="/<?= APP_BASE_PATH ?>/todo/category" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/todo/category') ?>">Category</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/<?= APP_BASE_PATH ?>/todo/tasks" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/todo/tasks') ?>">Tasks</a>
+                    </li>
                 </ul>
             </div>
         </nav>
