@@ -52,6 +52,20 @@ class CategoryModel{
             return false;
         }
     }
+
+    // если в категориях юзабилити 0 то не показывает его при создании новой таски
+    public function getAllCategoriesWithUsability(){
+        $query = "SELECT * FROM todo_category WHERE user = ? AND usability = 1";
+        try{
+            $stmt = $this->db->prepare($query); // подготавливаем запрос
+            $stmt->execute([$this->userID]); // запускаем подготовленный запрос на выполнение (получение категории конкретного пользователя)
+            $todo_category = $stmt->fetchAll(); // получаем массив содержащий все извлеченные строки
+            return $todo_category;
+        }catch(\PDOException $e){
+            return false;
+        }
+    }
+
 // метод в котором создаем роль
     public function createCategory($title, $description, $user_id){
 

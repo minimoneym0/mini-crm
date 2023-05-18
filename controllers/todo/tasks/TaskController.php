@@ -22,27 +22,26 @@ class TaskController{
     }
     // пишем метод, который вызывает шаблон страницы
     public function create(){
-        $this->check->requirePermission();
+        //$this->check->requirePermission();
 
         $todoCategory = new CategoryModel(); // создаем экземпляр класса
-        $categories = $todoCategory->getAllCategories(); // получаем из модели
+        $categories = $todoCategory->getAllCategoriesWithUsability(); // получаем из модели
 
         include 'app/views/todo/tasks/create.php';
     }
 
     public function store(){
-        if(isset($_POST['title']) && isset($_POST['description'])){
-            $title = trim($_POST['title']);
-            $description = trim($_POST['description']);
-            $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+        if(isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])){
+            
+            $data['title'] = trim($_POST['title']);
+            $data['category_id'] = trim($_POST['category_id']);
+            $data['finish_date'] = trim($_POST['finish_date']);
+            $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0 ;
+            $data['status'] = 'new';
+            $data['priority'] = 'low';
 
-            if(empty($title) || empty($description)){
-                echo "Title and Description is required!";
-                return;
-            }
-
-            $todoCategoryModel = new TaskModel();
-            $todoCategoryModel->createCategory($title, $description, $user_id);
+            $taskModel = new TaskModel();
+            $taskModel->createTask($data);
         }
         $path = '/'. APP_BASE_PATH . '/todo/tasks';
         header("Location: $path");
