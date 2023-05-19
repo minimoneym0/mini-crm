@@ -14,7 +14,7 @@ class TaskController{
     }
     // метод отображающий всех пользователей
     public function index(){
-        //$this->check->requirePermission();
+        $this->check->requirePermission();
         $taskModel = new TaskModel(); // создаем экземпляр класса Role(находится в моделях)
         $tasks = $taskModel->getAllTasks(); // получаем роли из модели
 
@@ -22,7 +22,7 @@ class TaskController{
     }
     // пишем метод, который вызывает шаблон страницы
     public function create(){
-        //$this->check->requirePermission();
+        $this->check->requirePermission();
 
         $todoCategory = new CategoryModel(); // создаем экземпляр класса
         $categories = $todoCategory->getAllCategoriesWithUsability(); // получаем из модели
@@ -65,7 +65,7 @@ class TaskController{
     }
 
     public function update(){
-        //$this->check->requirePermission();
+        $this->check->requirePermission();
         if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description'])){
             $id = trim($_POST['id']);
             $title = trim($_POST['title']);
@@ -86,7 +86,7 @@ class TaskController{
 
     // создадим метод для удаления ролей
     public function delete($params){
-        //$this->check->requirePermission();
+        $this->check->requirePermission();
         $todoCategoryModel = new TaskModel();
         $todoCategoryModel->deleteTask($params['id']); // вызываем метод для удаления по id
 

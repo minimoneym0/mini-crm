@@ -6,11 +6,14 @@ use models\Database;
 // модель получает данные, применяет нужный метод и пишет в базу
 class TaskModel{
     private $db;
+    private $userID;
     // конструктором подключаемся к БД, через созданные ранее ф-ии в классе Database
     // затем смотрим, если таблица с пользователями уже есть, то ничего не делаем, если нет, то отправляем запрос на создание таблицы users
     public function __construct()
     {
         $this->db = Database::getInstance()->getConnection();
+
+        $this->userID = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null; // присваиваем id пользователя в сессии
         try{
             $result = $this->db->query("SELECT 1 FROM `todo_list` LIMIT 1");
         }catch(\PDOException $e){
@@ -47,10 +50,10 @@ class TaskModel{
     }
 // пишем метод для получения всех ролей
     public function getAllTasks(){
-        $query = "SELECT * FROM todo_list";
+        $query = "SELECT * FROM todo_list WHERE user_id = ?";
         try{
             $stmt = $this->db->prepare($query); // подготавливаем запрос
-            $stmt->execute(); // запускаем подготовленный запрос на выполнение
+            $stmt->execute([$this->userID]); // запускаем подготовленный запрос на выполнение
             $todo_list = $stmt->fetchAll(); // получаем массив содержащий все извлеченные строки
             return $todo_list;
         }catch(\PDOException $e){
