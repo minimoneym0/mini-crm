@@ -57,12 +57,13 @@ class TaskController{
         $todoCategoryModel = new CategoryModel();
         $categories = $todoCategoryModel->getAllCategoriesWithUsability();
 
-        $tagsModel = new TagsModel();
-
         if(!$task){
             echo "Task not found";
             return;
         } 
+
+        $tagsModel = new TagsModel();
+        $tags = $tagsModel -> getTagsByTaskId($task['id']);
 
         include 'app/views/todo/tasks/edit.php';
     }
