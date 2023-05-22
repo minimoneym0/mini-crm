@@ -104,7 +104,58 @@ ob_start();?>
         </div>
     </div>
 </form>
+<script>
+    const tagInput = document.querySelector('#tag-input'); // поле ввода тегов
+    const tagsContainer = document.querySelector('.tags-container'); // контейнер где будут отображаться теги
+    const hiddenTags = document.querySelector('#hidden-tags'); // поле для хранение и отправки добавленных тегов на сервер
+    const existingTags = '<?= htmlspecialchars(isset($task['tags']) ? $task['tags'] : '') ?>'; // существующие теги
+// пишем ф-ию, которая будет создавать тег
+    function createTag(text) {
+        const tag = document.createElement('div'); // создание отдельного тега в диве
+        tag.classList.add('tag'); // добавляем класс tag
+        const tagText = document.createElement('span'); // добавляем текст в спане
+        tagText.textContent = text; // добавляем текст со свхода ф-ии
 
+        const closeButton = document.createElement('button'); // создаем кнопку на удаление тега
+        closeButton.innerHTML = '&times;'; // внешний фид кнопки (крестик)
+
+        closeButton.addEventListener('click', () => {  // dspjd анонимн ф-ии по клику
+            tagsContainer.removeChild(tag); // удаление тега tag
+            updateHiddenTags(); // апдейтим теги в поле
+        });
+
+        tag.appendChild(tagText); // добавляем тег
+        tag.appendChild(closeButton); // добавляем кнопку удаления тега
+
+        return tag;
+    }
+// апдейт тегов
+    function updateHiddenTags(){
+        const tags = tagsContainer.querySelectorAll('.tag span'); // получаем все  span внутри блоков с классом tag
+        const tagText = Array.from(tags).map(tag => tag.textContent); // преобразуем полученные спаны в массив, а затем применяем ф-ю map для получения текстового сожержимого каждого эл-та span
+        hiddenTags.value = tagText.join(','); // преобразуем полученный массив, обратно в строку
+    }
+// срабатывает каждый раз, когда пользователь изменяет значение поля ввода
+    tagInput.addEventListener('input', (e) => { // проверяем инпут
+        if(e.target.value.includes(',')){ // проверяем содержит ли value запятую
+            const tagText = e.target.value.slice(0, -1).trim(); // извлекаем текст тега из значения поля ввода и удаляем последний символ запятую и убираем пробелы вначале и в конце
+            if (tagText.length > 1) { // проверяем длину строки
+                const tag = createTag(tagText); // если длина строки больше 1, передаем текст в константу tag
+                tagsContainer.insertBefore(tag, tagInput); // вставляем новый элемент тега перед полем ввода tagInput
+                updateHiddenTags();
+            }
+            e.target.value = ''; // очищаем значение поля ввода тега
+        }
+    });
+// удаление элемента по клику на кнопку [x]
+    tagsContainer.querySelectorAll('.tag button').forEach(button =>{
+        button.addEventListener('click', () => {
+            tagsContainer.removeChild(button.parentElement);
+            updateHiddenTags();
+        });
+    });
+
+</script>
 
 <?php $content = ob_get_clean();
 
