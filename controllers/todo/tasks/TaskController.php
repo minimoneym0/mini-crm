@@ -70,21 +70,52 @@ class TaskController{
 
     public function update(){
         $this->check->requirePermission();
-        if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description'])){
-            $id = trim($_POST['id']);
-            $title = trim($_POST['title']);
-            $description = trim($_POST['description']);
-            $usability = isset($_POST['usability']) ? $_POST['usability'] : 0;
 
-            if(empty($title) || empty($description)){
-                echo "title and description is required";
-                return;
+        if(isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])){
+            
+            $data['title'] = trim($_POST['title']);
+            $data['category_id'] = trim($_POST['category_id']);
+            $data['finish_date'] = trim($_POST['finish_date']);
+            $data['reminder_at'] = trim($_POST['reminder_at']);
+            $data['status'] = 'new';
+            $data['priority'] = 'low';
+            $data['description'] = trim($_POST['description']);
+            
+
+            // обработка даты окончания и напоминания
+            $finish_date_value = $data['finish_date'];
+            $reminder_at_option = $data['reminder_at'];
+            $finish_date = new \DateTime($finish_date_value);
+
+            switch($reminder_at_option){
+                case '30_minutes':
+                    $interval = new \DateInterval('PT30M'); // переводим в понятные значения даты и времени
+                    break;
+                case '1_hour':
+                    $interval = new \DateInterval('PT1H'); // переводим в понятные значения даты и времени
+                    break;
+                case '2_hour':
+                    $interval = new \DateInterval('PT2H'); // переводим в понятные значения даты и времени
+                    break;
+                case '12_hours':
+                    $interval = new \DateInterval('PT12H'); // переводим в понятные значения даты и времени
+                    break;
+                case '24_hours':
+                    $interval = new \DateInterval('PT1D'); // переводим в понятные значения даты и времени
+                    break;
+                case '7_days':
+                    $interval = new \DateInterval('PT7D'); // переводим в понятные значения даты и времени
+                    break;
             }
 
-            $todoCategoryModel = new CategoryModel();
-            $todoCategoryModel->updateCategory($id, $title, $description, $usability);
+            $reminder_at = $finish_date->sub($interval);
+            $data['reminder_at'] = $reminder_at->format('Y-m-d\TH:i');
+
+            // обновляем данные по задаче в базе
+            $taskModel = new TaskModel();
+            $taskModel->updateTask($data);
         }
-        $path = '/'. APP_BASE_PATH . '/todo/category';
+        $path = '/'. APP_BASE_PATH . '/todo/tasks';
         header("Location: $path");
     }
 
