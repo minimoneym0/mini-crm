@@ -73,12 +73,13 @@ class TaskController{
 
         if(isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])){
             
+            $data['id']  = trim($_POST['id']);
             $data['title'] = trim($_POST['title']);
             $data['category_id'] = trim($_POST['category_id']);
             $data['finish_date'] = trim($_POST['finish_date']);
             $data['reminder_at'] = trim($_POST['reminder_at']);
-            $data['status'] = 'new';
-            $data['priority'] = 'low';
+            $data['status'] = trim($_POST['status']);
+            $data['priority'] = trim($_POST['priority']);
             $data['description'] = trim($_POST['description']);
             
 
