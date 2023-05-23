@@ -83,6 +83,8 @@ class TaskController{
             $data['status'] = trim($_POST['status']);
             $data['priority'] = trim($_POST['priority']);
             $data['description'] = trim($_POST['description']);
+
+            $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0 ;
             
 
             // обработка даты окончания и напоминания
@@ -129,6 +131,9 @@ class TaskController{
             $this->tagsModel->removeAllTaskTags($data['id']);
 
             // добавляем новые теги и связываем с задачей
+            foreach($tags as $tag_name){
+                $tag = $this->tagsModel->getTagByNameAndUserId($tag_name, $data['user_id']);
+            }
         }
         $path = '/'. APP_BASE_PATH . '/todo/tasks';
         header("Location: $path");

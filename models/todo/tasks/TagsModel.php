@@ -61,7 +61,16 @@ class TagsModel {
         }catch(\PDOException $e){
             return false;
         }
+    }
 
+    public function getTagByNameAndUserId($tag_name, $user_id){
+        $query = "SELECT * FROM tags WHERE name = ? AND user_id = ?";
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$tag_name, $user_id]);
+        }catch(\PDOException $e){
+            return false;
+        }
     }
 
 
