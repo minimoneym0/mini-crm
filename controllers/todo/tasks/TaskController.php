@@ -8,10 +8,13 @@ use models\Check;
 // контроллеры обрабатывают данные и передают в модель
 class TaskController{
     private $check;
+    private $tagsModel;
+
     public function __construct()
     {
         $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
         $this->check = new Check($userRole);
+        $this->tagsModel = new TagsModel();
     }
     // метод отображающий всех пользователей
     public function index(){
@@ -62,8 +65,7 @@ class TaskController{
             return;
         } 
 
-        $tagsModel = new TagsModel();
-        $tags = $tagsModel -> getTagsByTaskId($task['id']);
+        $tags = $this->tagsModel -> getTagsByTaskId($task['id']);
 
         include 'app/views/todo/tasks/edit.php';
     }
@@ -73,7 +75,7 @@ class TaskController{
 
         if(isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])){
             
-            $data['id']  = trim($_POST['id']);
+            $data['id']  = $_POST['id'];
             $data['title'] = trim($_POST['title']);
             $data['category_id'] = trim($_POST['category_id']);
             $data['finish_date'] = trim($_POST['finish_date']);
@@ -115,6 +117,18 @@ class TaskController{
             // обновляем данные по задаче в базе
             $taskModel = new TaskModel();
             $taskModel->updateTask($data);
+
+            // обработка тегов
+            $tags = explode(',', $_POST['tags']);
+            $tags = array_map('trim', $tags);
+
+            // получение тегов с базы по задаче, которую редактируем
+            $oldTags = $this->tagsModel->getTagsByTaskId($data['id']);
+
+            // удаление старых связей между тегами и задачей
+            $this->tagsModel->removeAllTaskTags($data['id']);
+
+            // добавляем новые теги и связываем с задачей
         }
         $path = '/'. APP_BASE_PATH . '/todo/tasks';
         header("Location: $path");

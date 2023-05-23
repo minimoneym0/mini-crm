@@ -53,5 +53,16 @@ class TagsModel {
         }
     }
 
+    public function removeAllTaskTags($task_id){
+        $query = "DELETE * FROM task_tags WHERE task_id = ?";
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute(['task_id' => $task_id]);
+        }catch(\PDOException $e){
+            return false;
+        }
+
+    }
+
 
 }
