@@ -22,6 +22,7 @@ class TagsModel {
             `user_id` INT,
             `name` VARCHAR(255) NOT NULL,
             FOREIGN KEY (user_id) REFERENCES users(id));
+
             CREATE TABLE IF NOT EXISTS `task_tags` (
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `task_id` INT NOT NULL,
@@ -53,25 +54,72 @@ class TagsModel {
         }
     }
 
-    public function removeAllTaskTags($task_id){
-        $query = "DELETE * FROM task_tags WHERE task_id = ?";
+    public function removeAllTaskTags($task_id) {
+        $query = "DELETE FROM task_tags WHERE task_id = :task_id";
+        
         try{
             $stmt = $this->db->prepare($query);
             $stmt->execute(['task_id' => $task_id]);
-        }catch(\PDOException $e){
+        } catch(\PDOException $e){
             return false;
         }
     }
 
-    public function getTagByNameAndUserId($tag_name, $user_id){
+    public function getTagByNameAndUserId($tag_name, $user_id)
+    {
         $query = "SELECT * FROM tags WHERE name = ? AND user_id = ?";
-        try{
+
+        try {
             $stmt = $this->db->prepare($query);
             $stmt->execute([$tag_name, $user_id]);
-        }catch(\PDOException $e){
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch(\PDOException $e) {
             return false;
         }
     }
 
+    public function addTag($tag_name, $user_id)
+    {
+        $query = "INSERT INTO tags (name, user_id) VALUE (?, ?)";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$tag_name, $user_id]);
+            return $this->db->lastInsertId();
+        } catch(\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function addTaskTag($task_id, $tag_id)
+    {
+        $query = "INSERT INTO task_tags (task_id, tag_id) VALUE (?, ?)";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$task_id, $tag_id]);
+            return true;
+        } catch(\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function removeUnusedTag($tag_id)
+    {
+        $query = "SELECT COUNT(*) FROM task_tags WHERE tag_id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([ $tag_id]);
+        $count = $stmt->fetch(\PDO::FETCH_ASSOC)['COUNT(*)'];
+        try {
+            if($count == 0){
+                $query = "DELETE FROM tags WHERE id = ?";
+                $stmt = $this->db->prepare($query);
+                $stmt->execute([$tag_id]);
+                return true;
+            }
+        } catch(\PDOException $e) {
+            return false;
+        }
+    }
 
 }
