@@ -43,7 +43,7 @@ class TaskController{
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
         $taskModel = new TaskModel();
-        $completedTasks = $taskModel->getAllExpiredTasksByIdUser($user_id);
+        $expiredTasks = $taskModel->getAllExpiredTasksByIdUser($user_id);
 
         include 'app/views/todo/tasks/expired.php';
     }
