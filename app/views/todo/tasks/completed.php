@@ -5,7 +5,7 @@ ob_start();?>
 
 <h1 class="mb-4">TODO task list - completed</h1>
     <div class="accordion" id="tasks-accordion">
-        <?php foreach ($tasks as $task): ?>
+        <?php foreach ($completedTasks as $task): ?>
             <div class="accordion-item mb-2">
                 <div class="accordion-header d-flex justify-content-between align-items-center row" id="task-<?php echo $task['id']; ?>">
                     <h2 class="accordion-header col-12 col-md-6">
