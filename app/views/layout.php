@@ -37,11 +37,20 @@
                 </ul>
                 <h3>TODO list : </h3>
                 <ul class="navbar-nav">
+                <li class="nav-item">
+                        <a href="/<?= APP_BASE_PATH ?>/todo/tasks/create" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/todo/tasks/create') ?>">Create task</a>
+                    </li>
                     <li class="nav-item">
                         <a href="/<?= APP_BASE_PATH ?>/todo/category" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/todo/category') ?>">Category</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/<?= APP_BASE_PATH ?>/todo/tasks" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/todo/tasks') ?>">Tasks</a>
+                        <a href="/<?= APP_BASE_PATH ?>/todo/tasks" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/todo/tasks') ?>">Tasks(opened)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/<?= APP_BASE_PATH ?>/todo/tasks/completed" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/todo/tasks/completed') ?>">Tasks(completed)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/<?= APP_BASE_PATH ?>/todo/tasks/expired" class="nav-link <?= is_active('/'. APP_BASE_PATH. '/todo/tasks/expired') ?>">Tasks(expired)</a>
                     </li>
                 </ul>
             </div>

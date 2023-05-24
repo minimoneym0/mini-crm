@@ -1,9 +1,9 @@
 <?php
 
-$title = 'TODO task list';
+$title = 'TODO task list - completed';
 ob_start();?>
 
-<h1 class="mb-4">Todo List</h1>
+<h1 class="mb-4">TODO task list - completed</h1>
     <div class="accordion" id="tasks-accordion">
         <?php foreach ($tasks as $task): ?>
             <div class="accordion-item mb-2">
