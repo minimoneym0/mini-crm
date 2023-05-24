@@ -35,8 +35,19 @@ class TaskController{
         $taskModel = new TaskModel();
         $completedTasks = $taskModel->getAllCompletedTasksByIdUser($user_id);
 
-        include 'app/views/todo/tasks/index.php';
+        include 'app/views/todo/tasks/completed.php';
     }
+
+    public function expired(){
+        $this->check->requirePermission();
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+        $taskModel = new TaskModel();
+        $completedTasks = $taskModel->getAllExpiredTasksByIdUser($user_id);
+
+        include 'app/views/todo/tasks/expired.php';
+    }
+
 
     public function create(){
         $this->check->requirePermission();
