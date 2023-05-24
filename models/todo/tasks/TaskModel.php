@@ -74,6 +74,22 @@ class TaskModel {
         }
     }
 
+    public function getAllCompletedTasksByIdUser($user_id){
+
+        try{
+            $stmt = $this->db->prepare("SELECT * FROM todo_list WHERE user_id = :user_id AND status = 'completed' ORDER BY ABS(TIMESTAMPDIFF(SECOND, NOW(), finish_date))");
+            $stmt->bindParam(':user_id', $user_id, \PDO::PARAM_INT);
+            $stmt->execute();
+            $todo_list = [];
+            while($row = $stmt->fetch(\PDO::FETCH_ASSOC)){
+                $todo_list[] = $row;
+            }
+            return $todo_list;
+        }catch(\PDOException $e){
+            return false;
+        }
+    }
+
     public function createTask($data)
     
     {

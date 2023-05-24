@@ -28,6 +28,16 @@ class TaskController{
         include 'app/views/todo/tasks/index.php';
     }
 
+    public function completed(){
+        $this->check->requirePermission();
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+        $taskModel = new TaskModel();
+        $completedTasks = $taskModel->getAllCompletedTasksByIdUser($user_id);
+
+        include 'app/views/todo/tasks/index.php';
+    }
+
     public function create(){
         $this->check->requirePermission();
 
