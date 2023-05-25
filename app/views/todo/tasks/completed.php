@@ -6,10 +6,27 @@ ob_start();?>
 <h1 class="mb-4">TODO task list - completed</h1>
     <div class="accordion" id="tasks-accordion">
         <?php foreach ($completedTasks as $task): ?>
+            <?php
+                $priorityColor = '';
+                switch($task['priority']){
+                    case 'low':
+                        $priorityColor = '#90d882';
+                        break;
+                    case 'medium':
+                        $priorityColor = '#f6f46b';
+                        break;
+                    case 'high':
+                        $priorityColor = '#f6b66b';
+                        break;
+                    case 'urgent':
+                        $priorityColor = '#f6786b';
+                        break;
+                }
+                ?>
             <div class="accordion-item mb-2">
                 <div class="accordion-header d-flex justify-content-between align-items-center row" id="task-<?php echo $task['id']; ?>">
                     <h2 class="accordion-header col-12 col-md-6">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#task-collapse-<?php echo $task['id']; ?>" aria-expanded="false" aria-controls="task-collapse-<?php echo $task['id']; ?>">
+                        <button style="background:<?=$priorityColor;?>" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#task-collapse-<?php echo $task['id']; ?>" aria-expanded="false" aria-controls="task-collapse-<?php echo $task['id']; ?>">
                             <span class="col-12 col-md-5"><i class="fa-solid fa-square-up-right"></i> <strong><?php echo $task['title']; ?> </strong></span>
                             <span class="col-5 col-md-3"><i class="fa-solid fa-person-circle-question"></i> <?php echo $task['priority']; ?> </span>
                             <span class="col-5 col-md-3"><i class="fa-solid fa-hourglass-start"></i><span class="due-date"><?php echo $task['finish_date']; ?></span></span>
