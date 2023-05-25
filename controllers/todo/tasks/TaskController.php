@@ -107,7 +107,7 @@ class TaskController{
 
 
     public function update(){
-        $this->check->requirePermission();
+        //$this->check->requirePermission();
 
         if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])){
             $data['id'] = trim($_POST['id']);
@@ -188,13 +188,13 @@ class TaskController{
         header("Location: $path");
     }
 
-    public function delete($params){
-        $this->check->requirePermission();
+    public function delete($task){
+        //$this->check->requirePermission();
 
-         $todoCategoryModel = new CategoryModel();
-        $todoCategoryModel->deleteCategory($params['id']);
+        $todoTaskModel = new TaskModel();
+        $todoTaskModel->deleteTask($task['id']);
 
-        $path = '/'. APP_BASE_PATH . '/todo/category';
+        $path = '/'. APP_BASE_PATH . '/todo/tasks';
         header("Location: $path");
     }
 }

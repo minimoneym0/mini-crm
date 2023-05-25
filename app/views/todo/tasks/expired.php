@@ -3,12 +3,19 @@
 $title = 'TODO task list - expired';
 ob_start();?>
 
-<h1 class="mb-4">TODO task list - expired</h1>
+<h1 class="mb-4">Todo List expired</h1>
+    <div class="d-flex justify-content-around row filter-priority">
+        <a data-priority="low" class="btn mb-3 col-2 sort-btn" style="background: #90d882">Low</a>
+        <a data-priority="medium" class="btn mb-3 col-2 sort-btn" style="background: #f6f46b">Medium</a>
+        <a data-priority="high" class="btn mb-3 col-2 sort-btn" style="background: #f6b66b">High</a>
+        <a data-priority="urgent" class="btn mb-3 col-2 sort-btn" style="background: #f6786b">Urgent</a>
+    </div>
+            
     <div class="accordion" id="tasks-accordion">
         <?php foreach ($expiredTasks as $task): ?>
             <?php
                 $priorityColor = '';
-                switch($task['priority']){
+                switch ($task['priority']) {
                     case 'low':
                         $priorityColor = '#90d882';
                         break;
@@ -21,12 +28,12 @@ ob_start();?>
                     case 'urgent':
                         $priorityColor = '#f6786b';
                         break;
-                }
+                    }
                 ?>
             <div class="accordion-item mb-2">
                 <div class="accordion-header d-flex justify-content-between align-items-center row" id="task-<?php echo $task['id']; ?>">
                     <h2 class="accordion-header col-12 col-md-6">
-                        <button style="background:<?=$priorityColor;?>" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#task-collapse-<?php echo $task['id']; ?>" aria-expanded="false" aria-controls="task-collapse-<?php echo $task['id']; ?>">
+                        <button style="background: <?=$priorityColor?>;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#task-collapse-<?php echo $task['id']; ?>" aria-expanded="false" aria-controls="task-collapse-<?php echo $task['id']; ?>" data-priority="<?php echo $task['priority']; ?>">
                             <span class="col-12 col-md-5"><i class="fa-solid fa-square-up-right"></i> <strong><?php echo $task['title']; ?> </strong></span>
                             <span class="col-5 col-md-3"><i class="fa-solid fa-person-circle-question"></i> <?php echo $task['priority']; ?> </span>
                             <span class="col-5 col-md-3"><i class="fa-solid fa-hourglass-start"></i><span class="due-date"><?php echo $task['finish_date']; ?></span></span>
@@ -49,32 +56,6 @@ ob_start();?>
             </div>
         <?php endforeach; ?>
     </div>
-
-
-<script>
-    function updateRemainingTime() {
-        const dueDateElements = document.querySelectorAll('.due-date');
-        const now = new Date();
-
-        dueDateElements.forEach((element) => {
-            const dueDate = new Date(element.textContent);
-            const timeDiff = dueDate - now;
-
-            if (timeDiff > 0) {
-                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-
-                element.textContent = `Days: ${days} Hours: ${hours}`;
-            } else {
-                element.textContent = 'Time is up';
-            }
-        });
-    }
-
-    updateRemainingTime();
-    setInterval(updateRemainingTime, 60000); // Update every minute
-</script>
 
     
 

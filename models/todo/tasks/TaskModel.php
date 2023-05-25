@@ -148,9 +148,9 @@ class TaskModel {
         }
     }
 
-    public function deleteCategory($id)
+    public function deleteTask($id)
     {
-        $query = "DELETE FROM todo_category WHERE id = ?";
+        $query = "DELETE FROM todo_list WHERE id = ?";
 
         try {
             $stmt = $this->db->prepare($query);
