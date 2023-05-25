@@ -25,6 +25,11 @@ class TaskController{
         $taskModel = new TaskModel();
         $tasks = $taskModel->getAllTasksByIdUser($user_id);
 
+        // получение списка тегов для каждой записи в массиве
+        foreach($tasks as &$task){
+            
+        }
+
         include 'app/views/todo/tasks/index.php';
     }
 
