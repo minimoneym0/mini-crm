@@ -4,6 +4,12 @@ $title = 'TODO task list';
 ob_start();?>
 
 <h1 class="mb-4">Todo List</h1>
+<div class="d-flex justify-content-around row filter-priority">
+    <a data-priority="low" class="btn mb-3 col-2 sort-btn" style="background: #51A5F4">Low</a>
+    <a data-priority="medium" class="btn mb-3 col-2 sort-btn" style="background: #3C7AB5">Medium</a>
+    <a data-priority="high" class="btn mb-3 col-2 sort-btn" style="background: #274F75">High</a>
+    <a data-priority="urgent" class="btn mb-3 col-2 sort-btn" style="background: #122436">Urgent</a>
+</div>
     <div class="accordion" id="tasks-accordion">
         <?php foreach ($tasks as $task): ?>
             <?php
