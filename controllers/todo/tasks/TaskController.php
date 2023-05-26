@@ -27,7 +27,7 @@ class TaskController{
 
         $categoryModel = new CategoryModel();
 
-        // получение списка тегов для каждой записи в массиве
+        // Получение списка тегов для каждой записи в массиве
         foreach($tasks as &$task){
             $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
             $task['category'] = $categoryModel->getCategoryById($task['category_id']);
@@ -38,24 +38,41 @@ class TaskController{
 
     public function completed(){
         $this->check->requirePermission();
+
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
         $taskModel = new TaskModel();
         $completedTasks = $taskModel->getAllCompletedTasksByIdUser($user_id);
+
+        $categoryModel = new CategoryModel();
+
+        // Получение списка тегов для каждой записи в массиве
+        foreach($completedTasks as &$task){
+            $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
+            $task['category'] = $categoryModel->getCategoryById($task['category_id']);
+        }
 
         include 'app/views/todo/tasks/completed.php';
     }
 
     public function expired(){
         $this->check->requirePermission();
+
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
         $taskModel = new TaskModel();
         $expiredTasks = $taskModel->getAllExpiredTasksByIdUser($user_id);
 
+        $categoryModel = new CategoryModel();
+
+        // Получение списка тегов для каждой записи в массиве
+        foreach($expiredTasks as &$task){
+            $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
+            $task['category'] = $categoryModel->getCategoryById($task['category_id']);
+        }
+
         include 'app/views/todo/tasks/expired.php';
     }
-
 
     public function create(){
         $this->check->requirePermission();
@@ -107,7 +124,7 @@ class TaskController{
 
 
     public function update(){
-        //$this->check->requirePermission();
+        $this->check->requirePermission();
 
         if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])){
             $data['id'] = trim($_POST['id']);
@@ -167,7 +184,6 @@ class TaskController{
             // Добавляем новые теги и связываем с задачей
             foreach ($tags as $tag_name){
                 $tag = $this->tagsModel->getTagByNameAndUserId($tag_name, $data['user_id']);
-
                 if (!$tag){
                     $tag_id = $this->tagsModel->addTag($tag_name, $data['user_id']);
                 } else{
@@ -188,11 +204,11 @@ class TaskController{
         header("Location: $path");
     }
 
-    public function delete($task){
+    public function delete($tasks){
         //$this->check->requirePermission();
 
         $todoTaskModel = new TaskModel();
-        $todoTaskModel->deleteTask($task['id']);
+        $todoTaskModel->deleteTask($tasks['id']);
 
         $path = '/'. APP_BASE_PATH . '/todo/tasks';
         header("Location: $path");

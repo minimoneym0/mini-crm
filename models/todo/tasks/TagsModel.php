@@ -22,7 +22,6 @@ class TagsModel {
             `user_id` INT,
             `name` VARCHAR(255) NOT NULL,
             FOREIGN KEY (user_id) REFERENCES users(id));
-
             CREATE TABLE IF NOT EXISTS `task_tags` (
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `task_id` INT NOT NULL,
