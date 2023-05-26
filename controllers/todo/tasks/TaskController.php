@@ -28,10 +28,10 @@ class TaskController{
         $categoryModel = new CategoryModel();
 
         // Получение списка тегов для каждой записи в массиве
-        foreach($tasks as &$task){
-            $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
-            $task['category'] = $categoryModel->getCategoryById($task['category_id']);
-        }
+        // foreach($tasks as &$task){
+        //     $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
+        //     $task['category'] = $categoryModel->getCategoryById($task['category_id']);
+        // }
 
         include 'app/views/todo/tasks/index.php';
     }
@@ -47,10 +47,10 @@ class TaskController{
         $categoryModel = new CategoryModel();
 
         // Получение списка тегов для каждой записи в массиве
-        foreach($completedTasks as &$task){
-            $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
-            $task['category'] = $categoryModel->getCategoryById($task['category_id']);
-        }
+        //  foreach($completedTasks as &$task){
+        //     $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
+        //     $task['category'] = $categoryModel->getCategoryById($task['category_id']);
+        //  }
 
         include 'app/views/todo/tasks/completed.php';
     }
@@ -66,10 +66,10 @@ class TaskController{
         $categoryModel = new CategoryModel();
 
         // Получение списка тегов для каждой записи в массиве
-        foreach($expiredTasks as &$task){
-            $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
-            $task['category'] = $categoryModel->getCategoryById($task['category_id']);
-        }
+        // foreach($expiredTasks as &$task){
+        //     $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
+        //     $task['category'] = $categoryModel->getCategoryById($task['category_id']);
+        // }
 
         include 'app/views/todo/tasks/expired.php';
     }

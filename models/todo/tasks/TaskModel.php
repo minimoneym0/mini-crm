@@ -15,7 +15,7 @@ class TaskModel {
             $this->createTable();
         }
     }
-
+ 
     public function createTable(){
         $query = "CREATE TABLE IF NOT EXISTS `todo_list` (
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -77,9 +77,9 @@ class TaskModel {
     public function getAllCompletedTasksByIdUser($user_id){
 
         try{
-            $stmt = $this->db->prepare("SELECT * FROM todo_list WHERE user_id = :user_id AND status = 'completed' ORDER BY ABS(TIMESTAMPDIFF(SECOND, NOW(), finish_date))" );
-            $stmt->bindParam(':user_id', $user_id, \PDO::PARAM_INT);
-            $stmt->execute();
+            $stmt = $this->db->prepare("SELECT * FROM todo_list WHERE user_id = ? AND status = 'completed' ORDER BY ABS(TIMESTAMPDIFF(SECOND, NOW(), finish_date))" );
+            //$stmt->bindParam(':user_id', $user_id, \PDO::PARAM_INT);
+            $stmt->execute([$user_id]);
             $todo_list = [];
             while($row = $stmt->fetch(\PDO::FETCH_ASSOC)){
                 $todo_list[] = $row;

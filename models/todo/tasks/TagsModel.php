@@ -22,6 +22,7 @@ class TagsModel {
             `user_id` INT,
             `name` VARCHAR(255) NOT NULL,
             FOREIGN KEY (user_id) REFERENCES users(id));
+
             CREATE TABLE IF NOT EXISTS `task_tags` (
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `task_id` INT NOT NULL,
@@ -41,11 +42,11 @@ class TagsModel {
     public function getTagsByTaskId($task_id) {
         $query = "SELECT tags.* FROM tags
         JOIN task_tags ON tags.id = task_tags.tag_id
-        WHERE task_tags.task_id = :task_id";
+        WHERE task_tags.task_id = ?";
         
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute(['task_id' => $task_id]);
+            $stmt->execute([$task_id]);
     
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         } catch(\PDOException $e){
@@ -79,7 +80,8 @@ class TagsModel {
 
     public function addTag($tag_name, $user_id)
     {
-        $query = "INSERT INTO tags (name, user_id) VALUE (?, ?)";
+        $tag_name = strtolower($tag_name);
+        $query = "INSERT INTO tags (name, user_id) VALUE (LOWER(?), ?)";
 
         try {
             $stmt = $this->db->prepare($query);
@@ -107,7 +109,7 @@ class TagsModel {
     {
         $query = "SELECT COUNT(*) FROM task_tags WHERE tag_id = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->execute([ $tag_id]);
+        $stmt->execute([$tag_id]);
         $count = $stmt->fetch(\PDO::FETCH_ASSOC)['COUNT(*)'];
         try {
             if($count == 0){
@@ -116,6 +118,20 @@ class TagsModel {
                 $stmt->execute([$tag_id]);
                 return true;
             }
+        } catch(\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function getTagNameById($tag_id)
+    {
+        $query = "SELECT name FROM tags WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$tag_id]);
+            $tag = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $tag ? $tag['name'] : '';
         } catch(\PDOException $e) {
             return false;
         }
