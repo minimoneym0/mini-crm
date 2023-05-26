@@ -28,10 +28,10 @@ class TaskController{
         $categoryModel = new CategoryModel();
 
         // Получение списка тегов для каждой записи в массиве
-        // foreach($tasks as &$task){
-        //     $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
-        //     $task['category'] = $categoryModel->getCategoryById($task['category_id']);
-        // }
+        foreach($tasks as &$task){
+            $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
+            $task['category'] = $categoryModel->getCategoryById($task['category_id']);
+        }
 
         include 'app/views/todo/tasks/index.php';
     }
@@ -212,5 +212,27 @@ class TaskController{
 
         $path = '/'. APP_BASE_PATH . '/todo/tasks';
         header("Location: $path");
+    }
+
+    public function tasksByTag($params){
+        $this->check->requirePermission();
+
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+        $taskModel = new TaskModel();
+        $tasksByTag = $taskModel->getTasksByTagId($params['id'], $user_id);
+
+        $tagsModel = new TagsModel();
+        $tagname = $tagsModel->getTagNameById($params['id']);
+
+        $categoryModel = new CategoryModel();
+
+        // Получение списка тегов для каждой записи в массиве
+        foreach($tasksByTag as &$task){
+            $task['tags'] = $this->tagsModel->getTagsByTaskId($task['task_id']);
+            $task['category'] = $categoryModel->getCategoryById($task['category_id']);
+        }
+
+        include 'app/views/todo/tasks/by-tag.php';
     }
 }
