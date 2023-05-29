@@ -26,11 +26,23 @@ ob_start();
       <!-- Finish date field -->
       <div class="col-12 col-md-6 mb-3">
           <label for="finish_date">Finish Date</label>
-          <input type="datetime-local" class="form-control" id="finish_date" name="finish_date">
+          <input type="text" class="form-control" id="finish_date" name="finish_date" placeholder="Укажите время и дату">
       </div>
     </div>
         <button type="submit" class="btn btn-primary">Create Task</button>
     </form>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+        flatpickr("#finish_date", {
+          enableTime: true,
+          dateFormat: "Y-m-d H:00:00", // дата и время без минут и секунд
+          noCalendar : false,
+          time_24hr: true,
+          minuteIncrement: 60 // интервал времени один час
+        });
+      });
+    </script>
 
 <?php $content = ob_get_clean(); 
 
