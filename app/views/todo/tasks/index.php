@@ -50,7 +50,7 @@ ob_start();?>
                             <span class="col-12 col-md-6"><strong><i class="fa-solid fa-hourglass-start"></i> Due Date:</strong> <?php echo htmlspecialchars($oneTask['finish_date']); ?></span>
                         </p>
                         <p><strong><i class="fa-solid fa-file-prescription"></i> Tags:</strong> 
-                            <?php foreach ($task['tags'] as $tag): ?>
+                            <?php foreach ($oneTask['tags'] as $tag): ?>
                                 <a href="/<?= APP_BASE_PATH ?>/todo/tasks/by-tag/<?= $tag['id'] ?>" class="tag"><?= htmlspecialchars($tag['name']) ?></a>
                             <?php endforeach; ?>
                         </p>
