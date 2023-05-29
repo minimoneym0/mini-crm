@@ -185,7 +185,7 @@ class TaskModel {
             $stmt =$this->db->prepare($query);
             $stmt->execute([$id_task, $id_user]);
             $todo_task = $stmt->fetch(\PDO::FETCH_ASSOC);
-            return $todo_task ? $todo_task : false;
+            return $todo_task ? $todo_task : [];
         } catch(\PDOException $e){
             return false;
         }
