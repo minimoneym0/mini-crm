@@ -239,10 +239,18 @@ class TaskController{
 
     public function task($params){
         $this->check->requirePermission();
+
+        $task_id = isset($params['id']) ? intval($params['id']) : 0;
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
         $taskModel = new TaskModel();
         $task = $taskModel->getTaskByIdAndByIdUser($params['id'], $user_id);
+
+        if(!$task || $task['user_id'] != $user_id){
+            http_response_code(404);
+            include 'app/views/errors/404.php';
+            return;
+        }
 
         $todoCategoryModel = new CategoryModel();
         $category = $todoCategoryModel->getCategoryById($task['category_id']);
